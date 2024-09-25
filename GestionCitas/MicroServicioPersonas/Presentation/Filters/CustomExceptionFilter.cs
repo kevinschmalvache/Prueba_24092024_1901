@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net;
-using System.Web;
-using System.Web.Http.Filters;
-using MicroServicioPersonas.Exceptions;
-using System.Data.Entity.Core.Objects;
+﻿using MicroServicioPersonas.Exceptions;
+using System;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Http;
 using System.Text;
-using System.Web.Http.ExceptionHandling;
+using System.Web.Http.Filters;
 namespace MicroServicioPersonas.Presentation.Filters
 {
     public class CustomExceptionFilter : ExceptionFilterAttribute

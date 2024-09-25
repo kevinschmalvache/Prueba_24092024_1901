@@ -1,17 +1,12 @@
 using MicroServicioPersonas.Aplication.Interfaces;
+using MicroServicioPersonas.Aplication.Services;
+using MicroServicioPersonas.Domain.Interfaces;
+using MicroServicioPersonas.Infraestructure.Data;
+using MicroServicioPersonas.Infraestructure.Repositories;
 using System.Web.Http;
 using Unity;
 using Unity.Lifetime;
 using Unity.WebApi;
-using MicroServicioPersonas.Aplication.Services;
-using MicroServicioPersonas.Domain.Interfaces;
-using MicroServicioPersonas.Infraestructure.Data;
-using MicroServicioPersonas.Infraestructure.Repositories;
-using MicroServicioPersonas.Aplication.Interfaces;
-using MicroServicioPersonas.Aplication.Services;
-using MicroServicioPersonas.Domain.Interfaces;
-using MicroServicioPersonas.Infraestructure.Data;
-using MicroServicioPersonas.Infraestructure.Repositories;
 
 namespace MicroServicioPersonas
 {

@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MicroServicioPersonas.Domain.Models;
+﻿using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Domain.Services;
-using System;
 using MicroServicioPersonas.Exceptions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace MicroServicioPersonas.Tests.Domain.Services
 {

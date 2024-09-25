@@ -1,13 +1,9 @@
 ﻿using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Infraestructure.Data;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Configuration;
 
 namespace MicroServicioPersonas.Infraestructure.Repositories
 {

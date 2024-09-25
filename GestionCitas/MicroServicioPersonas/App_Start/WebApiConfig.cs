@@ -1,8 +1,4 @@
 ﻿using MicroServicioPersonas.Presentation.Filters;
-using Swashbuckle.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 
 namespace MicroServicioPersonas

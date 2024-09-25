@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using MicroServicioPersonas.Exceptions;
+﻿using MicroServicioPersonas.Aplication.Interfaces;
+using MicroServicioPersonas.Domain.Interfaces;
+using MicroServicioPersonas.Domain.Models;
+using MicroServicioPersonas.Domain.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using MicroServicioPersonas.Aplication.Interfaces;
-using MicroServicioPersonas.Domain.Models;
-using MicroServicioPersonas.Domain.Interfaces;
-using MicroServicioPersonas.Domain.Services;
-using System.Web.UI;
-using MicroServicioPersonas.Domain.Interfaces;
-using MicroServicioPersonas.Domain.Models;
-using MicroServicioPersonas.Domain.Services;
-using MicroServicioPersonas.Exceptions;
 
 namespace MicroServicioPersonas.Aplication.Services
 {
@@ -70,7 +64,7 @@ namespace MicroServicioPersonas.Aplication.Services
             // Obtener la existPersona existente
             Persona existPersona = await _personaRepository.GetById(id);
             _personaDomainService.ExistPersona(existPersona);
-            
+
             _personaRepository.Delete(id);
         }
     }

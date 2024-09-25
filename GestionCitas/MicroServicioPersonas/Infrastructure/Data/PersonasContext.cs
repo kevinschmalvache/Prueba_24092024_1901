@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace MicroServicioPersonas.Infraestructure.Data
+﻿namespace MicroServicioPersonas.Infraestructure.Data
 {
     using global::MicroServicioPersonas.Domain.Models;
     using System.Data.Entity;

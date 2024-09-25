@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using MicroServicioPersonas.Aplication.Interfaces;
+using MicroServicioPersonas.Domain.Models;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
-using MicroServicioPersonas.Aplication.Interfaces;
-using MicroServicioPersonas.Domain.Models;
-using MicroServicioPersonas.Aplication.Interfaces;
-using MicroServicioPersonas.Domain.Models;
 
 namespace MicroServicioPersonas.Presentation.Controllers
 {

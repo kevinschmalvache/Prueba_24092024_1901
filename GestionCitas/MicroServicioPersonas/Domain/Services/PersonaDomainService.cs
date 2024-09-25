@@ -1,10 +1,6 @@
-﻿using MicroServicioPersonas.Domain.Enums;
-using MicroServicioPersonas.Domain.Models;
+﻿using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace MicroServicioPersonas.Domain.Services
 {
@@ -23,7 +19,7 @@ namespace MicroServicioPersonas.Domain.Services
                 throw new ArgumentException("El apellido no puede estar vacío.");
             }
 
-            if (!persona.TipoDePersona.ToLower().Equals("medico") 
+            if (!persona.TipoDePersona.ToLower().Equals("medico")
                 && !persona.TipoDePersona.ToLower().Equals("paciente")
                )
             {
