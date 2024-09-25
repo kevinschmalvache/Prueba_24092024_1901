@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MicroServicioPersonas.Presentation.Filters;
+using Swashbuckle.Application;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -11,6 +13,14 @@ namespace MicroServicioPersonas
         {
             // Configuración y servicios de Web API
 
+            //Habilitamos swagger
+            //config.EnableSwagger(c =>
+            //{
+            //    c.SingleApiVersion("v1", "Tu API");
+            //})
+            //.EnableSwaggerUi();
+
+
             // Rutas de Web API
             config.MapHttpAttributeRoutes();
 
@@ -19,6 +29,9 @@ namespace MicroServicioPersonas
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // Registrar el filtro de excepción
+            config.Filters.Add(new CustomExceptionFilter());
         }
     }
 }
