@@ -1,7 +1,6 @@
 ﻿using MicroServicioCitas.Application.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 

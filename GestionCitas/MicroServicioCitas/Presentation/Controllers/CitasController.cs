@@ -47,7 +47,7 @@ namespace MicroServicioCitas.Presentation.Controllers
 
             Cita createdCita = await _citaService.Create(objCita);
             // Enviar mensaje a RabbitMQ al crear una cita
-            _rabbitMqSender.SendMessage($"Cita creada: ID = {createdCita.Id}, Paciente = {createdCita.PacienteId}");
+            await _rabbitMqSender.SendMessageAsync($"Cita creada: ID = {createdCita.Id}, Paciente = {createdCita.PacienteId}");
 
             return CreatedAtRoute("GetCitas", new { id = createdCita.Id }, createdCita);
         }
@@ -63,7 +63,7 @@ namespace MicroServicioCitas.Presentation.Controllers
             Cita updatedCita = await _citaService.Update(id, objCita);
 
             // Enviar mensaje a RabbitMQ al actualizar una cita
-            _rabbitMqSender.SendMessage($"Cita actualizada: ID = {updatedCita.Id}");
+            await _rabbitMqSender.SendMessageAsync($"Cita actualizada: ID = {updatedCita.Id}");
 
             return Ok(updatedCita);
         }
@@ -83,7 +83,7 @@ namespace MicroServicioCitas.Presentation.Controllers
             Cita citaUpdated = await _citaService.UpdateEstado(id, nuevoEstado);
 
             // Enviar mensaje a RabbitMQ al actualizar el estado
-            _rabbitMqSender.SendMessage($"Estado de cita actualizado: ID = {id}, Nuevo Estado = {nuevoEstado}");
+            await _rabbitMqSender.SendMessageAsync($"Estado de cita actualizado: ID = {id}, Nuevo Estado = {nuevoEstado}");
 
             //return StatusCode(HttpStatusCode.NoContent);
             return Ok(citaUpdated);

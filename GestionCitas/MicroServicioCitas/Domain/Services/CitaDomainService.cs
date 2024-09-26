@@ -18,7 +18,6 @@ namespace MicroServicioCitas.Domain.Services
             if (string.IsNullOrWhiteSpace(cita.Lugar))
                 throw new ArgumentException("El lugar de la cita es obligatorio.");
 
-            // Asegúrate de que el Paciente y el Médico existan (podrías consultar en sus respectivos repositorios)
             // if (!PacienteExists(cita.PacienteId)) 
             //     throw new ArgumentException("El paciente especificado no existe.");
             // if (!MedicoExists(cita.MedicoId)) 

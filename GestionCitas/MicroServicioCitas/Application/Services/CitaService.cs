@@ -28,7 +28,7 @@ namespace MicroServicioCitas.Application.Services
 
         public async Task<Cita> GetById(int id)
         {
-            var cita = await _citaRepository.GetById(id);
+            Cita cita = await _citaRepository.GetById(id);
             _citaDomainService.ExistCita(cita); // Valida si existe la cita
             return cita;
         }
@@ -42,7 +42,7 @@ namespace MicroServicioCitas.Application.Services
 
         public async Task<Cita> Update(int id, Cita cita)
         {
-            var existCita = await _citaRepository.GetById(id);
+            Cita existCita = await _citaRepository.GetById(id);
             _citaDomainService.ExistCita(existCita);
             _citaDomainService.ValidateCita(cita); // Validar la cita actualizada
 

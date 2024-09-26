@@ -1,5 +1,4 @@
 using MicroServicioCitas.Presentation.Filters;
-using MicroServicioCitas;
 using System.Web.Http;
 
 namespace MicroServicioCitas
