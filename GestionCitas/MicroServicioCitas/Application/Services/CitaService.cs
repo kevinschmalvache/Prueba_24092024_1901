@@ -97,7 +97,7 @@ namespace MicroServicioCitas.Application.Services
 
             cita.Estado = "Finalizada"; // Cambia el estado a "Finalizada"
             await _citaRepository.Update(cita);
-            await _rabbitMqService.SendRecetaRequest(cita.Id); // Envía la receta al finalizar la cita
+            await _rabbitMqService.SendRecetaRequest(cita); // Envía la receta al finalizar la cita
         }
     }
 }

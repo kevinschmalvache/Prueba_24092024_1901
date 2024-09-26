@@ -4,7 +4,7 @@ using System;
 
 namespace MicroServicioCitas.Domain.Services
 {
-    // Se centra en la lógica de negocio y validaciones, manteniendo la integridad de las entidades del dominio.
+    // Lógica de negocio y validaciones, manteniendo la integridad de las entidades del dominio.
     public class CitaDomainService
     {
         public void ValidateCita(Cita cita)
