@@ -18,6 +18,7 @@ namespace MicroServicioCitas.Domain.Models
 
         [Required(ErrorMessage = "El MedicoId es requerido.")]
         public int MedicoId { get; set; } // Asumiendo que tienes un modelo de Medico
+        
         [Required(ErrorMessage = "El Estado es requerido.")]
         public string Estado { get; set; } // "Pendiente", "En proceso", "Finalizada"
 

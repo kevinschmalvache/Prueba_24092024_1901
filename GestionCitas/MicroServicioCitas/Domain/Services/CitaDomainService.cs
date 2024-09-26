@@ -32,7 +32,7 @@ namespace MicroServicioCitas.Domain.Services
         public void ExistCita(Cita cita)
         {
             if (cita == null)
-                throw new ArgumentException("La cita no existe.");
+                throw new NotFoundException("La cita no existe.");
         }
     }
 }

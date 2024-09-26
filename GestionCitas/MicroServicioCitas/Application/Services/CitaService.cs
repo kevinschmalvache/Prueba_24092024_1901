@@ -52,11 +52,8 @@ namespace MicroServicioCitas.Application.Services
 
         public async Task<Cita> UpdateEstado(int id, string nuevoEstado)
         {
-            var cita = await _citaRepository.GetById(id);
-            if (cita == null)
-            {
-                throw new KeyNotFoundException("Cita no encontrada.");
-            }
+            Cita cita = await _citaRepository.GetById(id);
+            _citaDomainService.ExistCita(cita);
 
             // Validaciones del nuevo estado
             if (nuevoEstado != "Pendiente" && nuevoEstado != "En proceso" && nuevoEstado != "Finalizada")
@@ -66,12 +63,20 @@ namespace MicroServicioCitas.Application.Services
 
             // Actualiza el estado de la cita
             cita.Estado = nuevoEstado;
-            await _citaRepository.Update(cita); // Llama al método Update del repositorio
+            Cita objResult = await _citaRepository.UpdateEstado(id, nuevoEstado); // Llama al método Update del repositorio
 
             // Si el estado es "Finalizada", enviar un mensaje a RabbitMQ
             if (nuevoEstado == "Finalizada")
             {
-                await _rabbitMqService.SendRecetaRequest(cita.Id);
+                var recetaData = new
+                {
+                    CitaId = id,
+                    PacienteId = objResult.PacienteId,
+                    MedicoId = objResult.MedicoId
+                };
+
+                // Enviar el mensaje a RabbitMQ para que el microservicio de Recetas procese la creación de una nueva receta
+                await _rabbitMqService.SendRecetaRequest(recetaData);
             }
 
             return cita; // Retorna la cita actualizada
@@ -79,14 +84,14 @@ namespace MicroServicioCitas.Application.Services
 
         public async Task Delete(int id)
         {
-            var existCita = await _citaRepository.GetById(id);
+            Cita existCita = await _citaRepository.GetById(id);
             _citaDomainService.ExistCita(existCita);
             await _citaRepository.Delete(id);
         }
 
         public async Task FinalizarCita(int id)
         {
-            var cita = await GetById(id);
+            Cita cita = await GetById(id);
             if (cita.Estado != "Pendiente")
                 throw new Exception("Solo se pueden finalizar citas que estén en estado 'Pendiente'.");
 

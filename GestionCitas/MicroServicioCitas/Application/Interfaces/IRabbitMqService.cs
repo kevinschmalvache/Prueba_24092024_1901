@@ -4,6 +4,6 @@ namespace MicroServicioCitas.Application.Interfaces
 {
     public interface IRabbitMqService
     {
-        Task SendRecetaRequest(int citaId);
+        Task SendRecetaRequest(object citaId);
     }
 }

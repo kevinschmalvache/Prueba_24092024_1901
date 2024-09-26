@@ -14,7 +14,8 @@ namespace MicroServicioCitas.Application.Services
 
         public RabbitMqService()
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" }; // Configura tu host
+            //Configuro el host de rabbitMq
+            ConnectionFactory factory = new ConnectionFactory() { HostName = "localhost" };
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
 
@@ -22,17 +23,24 @@ namespace MicroServicioCitas.Application.Services
             _channel.ExchangeDeclare(exchange: "recetaExchange", type: "direct");
         }
 
-        public async Task SendRecetaRequest(int citaId)
+        public async Task SendRecetaRequest(object recetaData)
         {
-            var recetaData = new { CitaId = citaId };
+            // Serializa los datos de la receta a formato JSON
             var message = JsonConvert.SerializeObject(recetaData);
+
+            // Convierte el mensaje JSON a un array de bytes
             var body = Encoding.UTF8.GetBytes(message);
 
-            // Publica el mensaje
-            _channel.BasicPublish(exchange: "recetaExchange",
-                                  routingKey: "recetaRoutingKey",
-                                  basicProperties: null,
-                                  body: body);
+            // Publica el mensaje en el exchange correspondiente
+            _channel.BasicPublish(
+                exchange: "recetaExchange",          // Nombre del exchange
+                routingKey: "recetaRoutingKey",      // Routing key de la cola de recetas
+                basicProperties: null,               // No necesitas propiedades adicionales aquí
+                body: body                           // El mensaje que se envía
+            );
+
+            // Puedes implementar lógica adicional después de enviar el mensaje si es necesario
+            await Task.CompletedTask;
         }
 
         // Cierre de conexión
