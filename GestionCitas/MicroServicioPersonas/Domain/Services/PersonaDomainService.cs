@@ -1,6 +1,8 @@
-﻿using MicroServicioPersonas.Domain.Models;
+﻿using MicroServicioPersonas.Domain.Enums;
+using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Exceptions;
 using System;
+using System.Linq;
 
 namespace MicroServicioPersonas.Domain.Services
 {
@@ -19,12 +21,12 @@ namespace MicroServicioPersonas.Domain.Services
                 throw new ArgumentException("El apellido no puede estar vacío.");
             }
 
-            if (!persona.TipoDePersona.ToLower().Equals("medico")
-                && !persona.TipoDePersona.ToLower().Equals("paciente")
-               )
+            // Validar si el tipo persona esta en el enum
+            if (!Enum.GetNames(typeof(TipoDePersona)).Contains(persona.TipoDePersona))
             {
-                throw new ArgumentException("El tipo de persona no es válido. Debe ser 'Medico' o 'Paciente'.");
+                throw new ArgumentException("El estado de la receta no es válido.");
             }
+
         }
 
         public void ExistPersona(Persona persona)

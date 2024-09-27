@@ -41,7 +41,7 @@ namespace MicroServicioPersonas.Tests.Application.Services
             _mockRepository.Setup(repo => repo.GetAll()).ReturnsAsync(personas);
 
             // Act
-            var result = await _personaService.GetAll();
+            List<Persona> result = await _personaService.GetAll();
 
             // Assert
             Assert.AreEqual(2, result.Count);
@@ -62,11 +62,11 @@ namespace MicroServicioPersonas.Tests.Application.Services
         public async Task CrearPersona_DeberiaRetornarPersonaCreada()
         {
             // Arrange
-            var nuevaPersona = new Persona { Nombre = "Carlos", Apellido = "López", TipoDePersona = "Paciente" };
+            Persona nuevaPersona = new Persona { Nombre = "Carlos", Apellido = "López", TipoDePersona = "Paciente" };
             _mockRepository.Setup(repo => repo.Add(nuevaPersona)).ReturnsAsync(nuevaPersona);
 
             // Act
-            var result = await _personaService.Create(nuevaPersona);
+            Persona result = await _personaService.Create(nuevaPersona);
 
             // Assert
             Assert.IsNotNull(result);

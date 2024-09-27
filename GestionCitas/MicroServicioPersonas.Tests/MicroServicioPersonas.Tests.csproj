@@ -107,7 +107,6 @@
     <Compile Include="Application\Services\PersonaServiceTests.cs" />
     <Compile Include="Domain\Services\PersonaDomainServiceTests.cs" />
     <Compile Include="Presentation\Controllers\PersonasControllerTests.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

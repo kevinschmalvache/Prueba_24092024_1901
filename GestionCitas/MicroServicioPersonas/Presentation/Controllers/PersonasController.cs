@@ -40,7 +40,7 @@ namespace MicroServicioPersonas.Presentation.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdPersona = await _personaService.Create(objPersona);
+            Persona createdPersona = await _personaService.Create(objPersona);
             return CreatedAtRoute("GetPersona", new { id = createdPersona.Id }, createdPersona);
         }
 
