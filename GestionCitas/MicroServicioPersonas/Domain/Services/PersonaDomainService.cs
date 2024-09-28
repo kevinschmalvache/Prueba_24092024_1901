@@ -21,12 +21,20 @@ namespace MicroServicioPersonas.Domain.Services
                 throw new ArgumentException("El apellido no puede estar vacío.");
             }
 
-            // Validar si el tipo persona esta en el enum
-            if (!Enum.GetNames(typeof(TipoDePersona)).Contains(persona.TipoDePersona))
+            if (string.IsNullOrWhiteSpace(persona.TipoDePersona))
             {
-                throw new ArgumentException("El estado de la receta no es válido.");
+                throw new ArgumentException("El tipo de persona no puede estar vacío.");
             }
 
+            // Validar si el tipo persona esta en el enum
+            if (!Enum.GetNames(typeof(TipoDePersona)).Contains(persona.TipoDePersona.ToLower()))
+            {
+                throw new ArgumentException("El tipo de persona no es válido.");
+            }
+            else
+            {
+                persona.TipoDePersona = persona.TipoDePersona.ToLower();
+            }
         }
 
         public void ExistPersona(Persona persona)

@@ -1,4 +1,6 @@
-﻿using MicroServicioPersonas.Aplication.Interfaces;
+﻿using AutoMapper;
+using MicroServicioPersonas.Aplication.Interfaces;
+using MicroServicioPersonas.Application.DTOs;
 using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Domain.Services;
@@ -10,52 +12,71 @@ namespace MicroServicioPersonas.Aplication.Services
     //Se ocupa de la orquestación, manipulación de datos y control de flujo.
     public class PersonaService : IPersonaService
     {
+        private readonly IMapper _mapper;
         private readonly IPersonaRepository _personaRepository;
         private readonly PersonaDomainService _personaDomainService;
 
         // Constructor donde se inyecta el repositorio
-        public PersonaService(IPersonaRepository personaRepository, PersonaDomainService personaDomainService)
+        public PersonaService(IMapper mapper, IPersonaRepository personaRepository, PersonaDomainService personaDomainService)
         {
+            _mapper = mapper;
             _personaRepository = personaRepository;
             _personaDomainService = personaDomainService; // Asignar
         }
 
-        public Task<List<Persona>> GetAll()
+        public async Task<List<PersonaDTO>> GetAll()
         {
-            return _personaRepository.GetAll();
+            // Obtener la lista de personas desde el repositorio
+            List<Persona> personas = await _personaRepository.GetAll();
+            return _mapper.Map<List<PersonaDTO>>(personas);
         }
 
-        public async Task<Persona> GetById(int id)
+        public async Task<PersonaDTO> GetById(int id)
         {
+            // Obtener la persona existente
             Persona objPersona = await _personaRepository.GetById(id);
+
+            // Validar que la persona exista
             _personaDomainService.ExistPersona(objPersona);
 
-            return objPersona;
+            return _mapper.Map<PersonaDTO>(objPersona);
         }
 
-        public async Task<Persona> Create(Persona objPersona)
+        public async Task<PersonaDTO> Create(CreatePersonaDTO createPersonaDto)
         {
+            // Mapeo del DTO a la entidad Persona
+            Persona objPersona = _mapper.Map<Persona>(createPersonaDto);
+
             // Validaciones de negocio antes de agregar
             _personaDomainService.ValidatePersona(objPersona);
 
-            // Llamada asincrónica al repositorio
+            // Llamada asincrónica al repositorio para agregar la persona
             objPersona = await _personaRepository.Add(objPersona);
 
-            return objPersona;
+            // Retornar el objeto Persona mapeado a PersonaDTO
+            return _mapper.Map<PersonaDTO>(objPersona);
         }
 
-        public async Task<Persona> Update(int id, Persona objPersona)
+        public async Task<PersonaDTO> Update(int id, UpdatePersonaDTO updatePersonaDto)
         {
-
-            // Obtener la existPersona existente
+            // Obtener la persona existente
             Persona existPersona = await _personaRepository.GetById(id);
+
+            // Validar que la persona exista
             _personaDomainService.ExistPersona(existPersona);
 
-            // Validaciones de negocio antes de actualizar
-            objPersona.Id = id;
+            // Mapear solo las propiedades actualizables (Nombre y Apellido) a la entidad existente
+            //_mapper.Map(updatePersonaDto, existPersona);
+            Persona persona = _mapper.Map<Persona>(updatePersonaDto);
 
-            // Retornar la entidad actualizada
-            return await _personaRepository.Update(objPersona);
+            // Actualizar la entidad en la base de datos
+            existPersona = await _personaRepository.Update(id, persona);
+
+            // Mapear la entidad actualizada a PersonaDTO
+            PersonaDTO updatedPersonaDto = _mapper.Map<PersonaDTO>(existPersona);
+
+            // Retornar el DTO de la persona actualizada
+            return updatedPersonaDto;
         }
 
 

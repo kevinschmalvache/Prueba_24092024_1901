@@ -9,7 +9,7 @@ namespace MicroServicioCitas.Domain.Interfaces
         Task<List<Cita>> GetAll();
         Task<Cita> GetById(int id);
         Task<Cita> Add(Cita persona);
-        Task<Cita> Update(Cita persona);
+        Task<Cita> Update(int id, Cita persona);
         Task<Cita> UpdateEstado(int id, string nuevoEstado);
         Task Delete(int id);
     }

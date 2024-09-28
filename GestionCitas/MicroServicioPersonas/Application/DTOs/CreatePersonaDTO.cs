@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace MicroServicioPersonas.Application.DTOs
 {
-    public class PersonaDTO
+    public class CreatePersonaDTO
     {
-        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public string TipoDePersona { get; set; }
+
+        [Required(ErrorMessage = "El tipo de persona es requerido.")]
+        public string TipoDePersona { get; set; }  // Validado contra el enum
     }
 }

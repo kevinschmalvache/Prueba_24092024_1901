@@ -24,19 +24,24 @@ namespace MicroServicioPersonas.Infraestructure.Repositories
             return objPersonaCreate;
         }
 
-        public async Task<Persona> Update(Persona objPersonaUpdate)
+        public async Task<Persona> Update(int id, Persona objPersonaUpdate)
         {
-            Persona objPersonaOriginal = await _context.Personas.FindAsync(objPersonaUpdate.Id);
+            Persona objPersonaOriginal = await _context.Personas.FindAsync(id);
+
+            // Lista de propiedades a actualizar
+            var propertiesToUpdate = new List<string> { "Nombre", "Apellido" };
 
             // Itera sobre las propiedades de la entidad actualizada
-            var properties = typeof(Persona).GetProperties();
-            foreach (var property in properties)
+            //var properties = typeof(Persona).GetProperties();
+            foreach (var property in propertiesToUpdate)
             {
-                var updatedValue = property.GetValue(objPersonaUpdate);
-                if (updatedValue != null)
+                var propertyInfo = typeof(Persona).GetProperty(property);
+
+                var updatedValue = propertyInfo.GetValue(objPersonaUpdate);
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
                 {
-                    property.SetValue(objPersonaOriginal, updatedValue);
-                    _context.Entry(objPersonaOriginal).Property(property.Name).IsModified = true;
+                    propertyInfo.SetValue(objPersonaOriginal, updatedValue);
+                    _context.Entry(objPersonaOriginal).Property(property).IsModified = true;
                 }
             }
             await _context.SaveChangesAsync();

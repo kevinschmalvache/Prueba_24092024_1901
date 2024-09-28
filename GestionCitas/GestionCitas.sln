@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicioPersonas.Tests", "MicroServicioPersonas.Tests\MicroServicioPersonas.Tests.csproj", "{C7C605E4-84E3-4CBD-85C7-284393AF58DC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MicroServicios", "MicroServicios", "{D477A97F-724B-45A9-8F6F-C2A45D226307}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{56DC1A25-6D5E-445B-8C71-CE1592BE3AAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicioPersonas", "MicroServicioPersonas\MicroServicioPersonas.csproj", "{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869}"
 EndProject
@@ -21,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7C605E4-84E3-4CBD-85C7-284393AF58DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7C605E4-84E3-4CBD-85C7-284393AF58DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7C605E4-84E3-4CBD-85C7-284393AF58DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7C605E4-84E3-4CBD-85C7-284393AF58DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C7C605E4-84E3-4CBD-85C7-284393AF58DC} = {56DC1A25-6D5E-445B-8C71-CE1592BE3AAE}
 		{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
 		{E7263B8F-BAFF-4FC3-A05D-BBD0CAFB9A2D} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
 		{9C42A37A-1A38-4FD4-91C3-E834AC696168} = {D477A97F-724B-45A9-8F6F-C2A45D226307}

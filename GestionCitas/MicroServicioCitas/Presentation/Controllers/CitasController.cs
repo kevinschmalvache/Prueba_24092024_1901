@@ -1,6 +1,8 @@
-﻿using MicroServicioCitas.Application.Interfaces;
+﻿using MicroServicioCitas.Application.DTOs;
+using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Application.Services;
 using MicroServicioCitas.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,7 +28,7 @@ namespace MicroServicioCitas.Presentation.Controllers
         [Route(Name = "GetCitas")]
         public async Task<IHttpActionResult> GetCitas()
         {
-            List<Cita> citas = await _citaService.GetAll();
+            List<CitaDTO> citas = await _citaService.GetAll();
             return Ok(citas);
         }
 
@@ -34,18 +36,18 @@ namespace MicroServicioCitas.Presentation.Controllers
         [Route("{id:int}")]
         public async Task<IHttpActionResult> GetCita(int id)
         {
-            Cita cita = await _citaService.GetById(id);
+            CitaDTO cita = await _citaService.GetById(id);
             return Ok(cita);
         }
 
         [HttpPost]
         [Route("")]
-        public async Task<IHttpActionResult> CreateCita([FromBody] Cita objCita)
+        public async Task<IHttpActionResult> CreateCita([FromBody] CreateCitaDTO objCita)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Cita createdCita = await _citaService.Create(objCita);
+            CitaDTO createdCita = await _citaService.Create(objCita);
             // Enviar mensaje a RabbitMQ al crear una cita
             await _rabbitMqSender.SendMessageAsync($"Cita creada: ID = {createdCita.Id}, Paciente = {createdCita.PacienteId}");
 
@@ -54,16 +56,16 @@ namespace MicroServicioCitas.Presentation.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> UpdateCita(int id, [FromBody] Cita objCita)
+        public async Task<IHttpActionResult> UpdateCita(int id, [FromBody] UpdateCitaDTO objCita)
         {
             //if (!ModelState.IsValid || objCita.Id != id)
-            if (objCita.Id != id)
-                return BadRequest(ModelState);
+            //if (objCita.Id != id)
+            //    return BadRequest(ModelState);
 
-            Cita updatedCita = await _citaService.Update(id, objCita);
+            CitaDTO updatedCita = await _citaService.Update(id, objCita);
 
             // Enviar mensaje a RabbitMQ al actualizar una cita
-            await _rabbitMqSender.SendMessageAsync($"Cita actualizada: ID = {updatedCita.Id}");
+            await _rabbitMqSender.SendMessageAsync($"UpdateCita Cita actualizada: ID = {updatedCita.Id}");
 
             return Ok(updatedCita);
         }
@@ -80,7 +82,7 @@ namespace MicroServicioCitas.Presentation.Controllers
         [Route("{id:int}/estado")]
         public async Task<IHttpActionResult> UpdateEstado(int id, [FromBody] string nuevoEstado)
         {
-            Cita citaUpdated = await _citaService.UpdateEstado(id, nuevoEstado);
+            CitaDTO citaUpdated = await _citaService.UpdateEstado(id, nuevoEstado);
 
             // Enviar mensaje a RabbitMQ al actualizar el estado
             await _rabbitMqSender.SendMessageAsync($"Estado de cita actualizado: ID = {id}, Nuevo Estado = {nuevoEstado}");
@@ -88,5 +90,6 @@ namespace MicroServicioCitas.Presentation.Controllers
             //return StatusCode(HttpStatusCode.NoContent);
             return Ok(citaUpdated);
         }
+
     }
 }

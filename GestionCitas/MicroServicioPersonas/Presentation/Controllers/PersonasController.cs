@@ -1,4 +1,6 @@
-﻿using MicroServicioPersonas.Aplication.Interfaces;
+﻿using AutoMapper;
+using MicroServicioPersonas.Aplication.Interfaces;
+using MicroServicioPersonas.Application.DTOs;
 using MicroServicioPersonas.Domain.Models;
 using System.Net;
 using System.Threading.Tasks;
@@ -11,11 +13,13 @@ namespace MicroServicioPersonas.Presentation.Controllers
     {
 
         private readonly IPersonaService _personaService;
+        private readonly IMapper _mapper;
 
         // Constructor que inyecta el servicio usando unity
-        public PersonasController(IPersonaService personaService)
+        public PersonasController(IPersonaService personaService, IMapper mapper)
         {
             _personaService = personaService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -35,19 +39,19 @@ namespace MicroServicioPersonas.Presentation.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<IHttpActionResult> CreatePersona([FromBody] Persona objPersona)
+        public async Task<IHttpActionResult> CreatePersona([FromBody] CreatePersonaDTO objPersona)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            Persona createdPersona = await _personaService.Create(objPersona);
+            PersonaDTO createdPersona = await _personaService.Create(objPersona);
             return CreatedAtRoute("GetPersona", new { id = createdPersona.Id }, createdPersona);
         }
 
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IHttpActionResult> UpdatePersona(int id, [FromBody] Persona objPersona)
+        public async Task<IHttpActionResult> UpdatePersona(int id, [FromBody] UpdatePersonaDTO objPersona)
         {
             return Ok(await _personaService.Update(id, objPersona));
         }

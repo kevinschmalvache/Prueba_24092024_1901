@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=10.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.10.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -126,7 +129,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\DTOs\CreatePersonaDTO.cs" />
+    <Compile Include="Application\DTOs\PersonaDTO.cs" />
+    <Compile Include="Application\DTOs\UpdatePersonaDTO.cs" />
     <Compile Include="Application\Interfaces\IPersonaService.cs" />
+    <Compile Include="Application\Mapping\AutoMapperProfiles\AutoMapperProfiles.cs" />
     <Compile Include="Application\Services\PersonaService.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
@@ -155,11 +162,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Application\DTOs\" />
-    <Folder Include="Application\Mapping\AutoMapperProfiles\" />
     <Folder Include="App_Data\" />
     <Folder Include="Infrastructure\SqlQuery\" />
     <Folder Include="Presentation\Extensions\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

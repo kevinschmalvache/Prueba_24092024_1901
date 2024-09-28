@@ -1,5 +1,6 @@
 ﻿using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
+using MicroServicioCitas.Exceptions;
 using MicroServicioCitas.Infraestructure.Data;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -25,23 +26,24 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             return cita;
         }
 
-        public async Task<Cita> Update(Cita objCitaUpdate)
+        public async Task<Cita> Update(int id ,Cita objCitaUpdate)
         {
             // Encuentra la cita existente en la base de datos
-            Cita objCitaOriginal = await _context.Citas.FindAsync(objCitaUpdate.Id);
+            Cita objCitaOriginal = await _context.Citas.FindAsync(id);
+
+            if (objCitaOriginal == null)
+                throw new NotFoundException("La cita no existe.");
 
             // Itera sobre las propiedades de la entidad actualizada
-            var properties = typeof(Cita).GetProperties();
-            foreach (var property in properties)
+            var propertiesToUpdate = new List<string> { "Lugar", "Fecha" };
+            foreach (var property in propertiesToUpdate)
             {
-                // Obtiene el valor actualizado
-                var updatedValue = property.GetValue(objCitaUpdate);
-                if (updatedValue != null)
+                var propertyInfo = typeof(Cita).GetProperty(property);
+                var updatedValue = propertyInfo.GetValue(objCitaUpdate);
+                if (updatedValue != null && !string.IsNullOrEmpty(updatedValue.ToString()))
                 {
-                    // Actualiza el valor en la cita original
-                    property.SetValue(objCitaOriginal, updatedValue);
-                    // Marca la propiedad como modificada
-                    _context.Entry(objCitaOriginal).Property(property.Name).IsModified = true;
+                    propertyInfo.SetValue(objCitaOriginal, updatedValue);
+                    _context.Entry(objCitaOriginal).Property(property).IsModified = true;
                 }
             }
 
@@ -54,7 +56,9 @@ namespace MicroServicioCitas.Infraestructure.Repositories
 
         public async Task<Cita> UpdateEstado(int id, string nuevoEstado)
         {
-            Cita existingCita = await GetById(id);
+            Cita existingCita = await _context.Citas.FindAsync(id);
+            if (existingCita == null)
+                throw new NotFoundException("La cita no existe.");
 
             // Actualiza el estado de la cita
             existingCita.Estado = nuevoEstado;

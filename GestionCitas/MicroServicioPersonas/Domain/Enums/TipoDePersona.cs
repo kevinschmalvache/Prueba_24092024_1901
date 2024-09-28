@@ -2,7 +2,7 @@
 {
     public enum TipoDePersona
     {
-        Medico,
-        Paciente
+        medico,
+        paciente
     }
 }

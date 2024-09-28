@@ -1,4 +1,6 @@
+using AutoMapper;
 using MicroServicioCitas.Application.Interfaces;
+using MicroServicioCitas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioCitas.Application.Services;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Infraestructure.Data;
@@ -30,6 +32,17 @@ namespace MicroServicioCitas
             container.RegisterType<RabbitMqConfig>(new SingletonLifetimeManager());
             container.RegisterType<RabbitMqSender>(new SingletonLifetimeManager());
             container.RegisterType<IRabbitMqService, RabbitMqService>(new SingletonLifetimeManager());
+
+
+            // Configuración de AutoMapper
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<CitaProfile>();
+            });
+            var mapper = config.CreateMapper();
+
+            // Registrar IMapper en Unity
+            container.RegisterInstance<IMapper>(mapper);
 
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);

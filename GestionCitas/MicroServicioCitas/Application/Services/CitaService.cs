@@ -1,4 +1,6 @@
-﻿using MicroServicioCitas.Application.Interfaces;
+﻿using AutoMapper;
+using MicroServicioCitas.Application.DTOs;
+using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Domain.Services;
@@ -10,67 +12,68 @@ namespace MicroServicioCitas.Application.Services
 {
     public class CitaService : ICitaService
     {
+        private readonly IMapper _mapper;
         private readonly ICitaRepository _citaRepository;
         private readonly CitaDomainService _citaDomainService;
         private readonly IRabbitMqService _rabbitMqService; // Servicio para RabbitMQ
 
-        public CitaService(ICitaRepository citaRepository, CitaDomainService citaDomainService, IRabbitMqService rabbitMqService)
+        public CitaService( IMapper mapper, 
+                            ICitaRepository citaRepository, 
+                            CitaDomainService citaDomainService, 
+                            IRabbitMqService rabbitMqService)
         {
+            _mapper = mapper;
             _citaRepository = citaRepository;
             _citaDomainService = citaDomainService;
             _rabbitMqService = rabbitMqService;
         }
 
-        public async Task<List<Cita>> GetAll()
+        public async Task<List<CitaDTO>> GetAll()
         {
-            return await _citaRepository.GetAll();
+            var citas = await _citaRepository.GetAll();
+            return _mapper.Map<List<CitaDTO>>(citas);
         }
 
-        public async Task<Cita> GetById(int id)
-        {
-            Cita cita = await _citaRepository.GetById(id);
-            _citaDomainService.ExistCita(cita); // Valida si existe la cita
-            return cita;
-        }
-
-        public async Task<Cita> Create(Cita cita)
-        {
-            _citaDomainService.ValidateCita(cita);
-            cita.Estado = "Pendiente"; // Estado inicial
-            return await _citaRepository.Add(cita);
-        }
-
-        public async Task<Cita> Update(int id, Cita cita)
-        {
-            Cita existCita = await _citaRepository.GetById(id);
-            _citaDomainService.ExistCita(existCita);
-            _citaDomainService.ValidateCita(cita); // Validar la cita actualizada
-
-            cita.Id = id; // Asigna el ID a la cita actualizada
-            return await _citaRepository.Update(cita);
-        }
-
-        public async Task<Cita> UpdateEstado(int id, string nuevoEstado)
+        public async Task<CitaDTO> GetById(int id)
         {
             Cita cita = await _citaRepository.GetById(id);
             _citaDomainService.ExistCita(cita);
+            return _mapper.Map<CitaDTO>(cita);
+        }
 
-            // Validaciones del nuevo estado
-            if (nuevoEstado != "Pendiente" && nuevoEstado != "En proceso" && nuevoEstado != "Finalizada")
-            {
-                throw new ArgumentException("Estado no válido.");
-            }
+        public async Task<CitaDTO> Create(CreateCitaDTO createCitaDto)
+        {
+            Cita cita = _mapper.Map<Cita>(createCitaDto);
+            _citaDomainService.ValidateCita(cita);
+            cita.Estado = "Pendiente";
+            cita = await _citaRepository.Add(cita);
+            return _mapper.Map<CitaDTO>(cita); 
+        }
+
+        public async Task<CitaDTO> Update(int id, UpdateCitaDTO updateCitaDto)
+        {
+            Cita cita = _mapper.Map<Cita>(updateCitaDto);
+            Cita updatedCita = await _citaRepository.Update(id, cita);
+            return _mapper.Map<CitaDTO>(updatedCita);
+        }
+
+        public async Task<CitaDTO> UpdateEstado(int id, string nuevoEstado)
+        {
+            Cita cita = await _citaRepository.GetById(id);
+            _citaDomainService.ExistCita(cita);
+            _citaDomainService.ValidateEstado(cita, nuevoEstado);
 
             // Actualiza el estado de la cita
             cita.Estado = nuevoEstado;
-            Cita objResult = await _citaRepository.UpdateEstado(id, nuevoEstado); // Llama al método Update del repositorio
+
+            Cita objResult = await _citaRepository.UpdateEstado(id, nuevoEstado);
 
             // Si el estado es "Finalizada", enviar un mensaje a RabbitMQ
-            if (nuevoEstado == "Finalizada")
+            if (objResult.Estado.ToLower().Equals("finalizada"))
             {
                 var recetaData = new
                 {
-                    CitaId = id,
+                    CitaId = objResult.Id,
                     PacienteId = objResult.PacienteId,
                     MedicoId = objResult.MedicoId
                 };
@@ -78,8 +81,7 @@ namespace MicroServicioCitas.Application.Services
                 // Enviar el mensaje a RabbitMQ para que el microservicio de Recetas procese la creación de una nueva receta
                 await _rabbitMqService.SendRecetaRequest(recetaData);
             }
-
-            return cita; // Retorna la cita actualizada
+            return _mapper.Map<CitaDTO>(objResult); // Retorna la cita actualizada en dto
         }
 
         public async Task Delete(int id)
@@ -89,15 +91,29 @@ namespace MicroServicioCitas.Application.Services
             await _citaRepository.Delete(id);
         }
 
-        public async Task FinalizarCita(int id)
-        {
-            Cita cita = await GetById(id);
-            if (cita.Estado != "Pendiente")
-                throw new Exception("Solo se pueden finalizar citas que estén en estado 'Pendiente'.");
+        //public async Task FinalizarCita(int id)
+        //{
+        //    // Obtener el DTO de la cita
+        //    CitaDTO citaDto = await GetById(id);
 
-            cita.Estado = "Finalizada"; // Cambia el estado a "Finalizada"
-            await _citaRepository.Update(cita);
-            await _rabbitMqService.SendRecetaRequest(cita); // Envía la receta al finalizar la cita
-        }
+        //    // Validar que el estado de la cita sea "Pendiente" o "En proceso"
+        //    if (citaDto.Estado != "Pendiente" && citaDto.Estado != "Enproceso")
+        //        throw new Exception("Solo se pueden finalizar citas que estén en estado 'Pendiente' o 'En proceso'.");
+
+        //    // Mapear el CitaDTO a la entidad Cita para realizar la actualización
+        //    var cita = _mapper.Map<Cita>(citaDto);
+
+        //    // Cambiar el estado a "Finalizada"
+        //    cita.Estado = "Finalizada";
+
+        //    // Actualizar la cita en el repositorio
+        //    await _citaRepository.Update(cita);
+
+        //    // Enviar el mensaje a RabbitMQ para procesar la creación de una receta
+        //    await _rabbitMqService.SendRecetaRequest(cita);
+
+        //    // Retornar el DTO actualizado ? 
+        //    //return _mapper.Map<CitaDTO>(cita); // Mapeo de Cita a CitaDTO para retornar
+        //}
     }
 }

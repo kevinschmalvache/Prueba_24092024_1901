@@ -5,7 +5,9 @@ using System.Web;
 
 namespace MicroServicioPersonas.Application.DTOs
 {
-    public class AutoMapperProfiles
+    public class UpdatePersonaDTO
     {
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
     }
 }
