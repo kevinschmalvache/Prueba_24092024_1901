@@ -1,5 +1,6 @@
 ﻿using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioPersonas.Domain.Models;
+using MicroServicioPersonas.Exceptions;
 using MicroServicioPersonas.Infraestructure.Data;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -27,6 +28,9 @@ namespace MicroServicioPersonas.Infraestructure.Repositories
         public async Task<Persona> Update(int id, Persona objPersonaUpdate)
         {
             Persona objPersonaOriginal = await _context.Personas.FindAsync(id);
+
+            if (objPersonaOriginal is null)
+                throw new NotFoundException($"La persona con el ID especificado no existe.");
 
             // Lista de propiedades a actualizar
             var propertiesToUpdate = new List<string> { "Nombre", "Apellido" };

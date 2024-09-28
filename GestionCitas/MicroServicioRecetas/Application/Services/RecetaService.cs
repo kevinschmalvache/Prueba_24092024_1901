@@ -67,5 +67,18 @@ namespace MicroServicioRecetas.Application.Services
 
             await _recetaRepository.DeleteRecetaAsync(id);
         }
+
+        public async Task<List<RecetaDTO>> GetRecetasByPacienteId(int pacienteId)
+        {
+            List<Receta> recetas = await _recetaRepository.GetRecetasByPacienteId(pacienteId);
+            return _mapper.Map<List<RecetaDTO>>(recetas);
+        }
+
+        public async Task<bool> UpdateEstadoReceta(int id, string nuevoEstado)
+        {
+            var objReceta = new Receta { Estado = nuevoEstado };
+            _recetaDomainService.ValidarEstadosReceta(objReceta);
+            return await _recetaRepository.UpdateEstadoRecetaAsync(id, nuevoEstado);
+        }
     }
 }

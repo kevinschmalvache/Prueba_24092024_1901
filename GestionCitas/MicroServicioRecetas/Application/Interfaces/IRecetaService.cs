@@ -12,5 +12,7 @@ namespace MicroServicioRecetas.Application.Interfaces
         Task<RecetaDTO> AddReceta(CreateRecetaDTO recetaDto);
         Task<RecetaDTO> UpdateReceta(int id, UpdateRecetaDTO recetaDto);
         Task DeleteReceta(int id);
+        Task<List<RecetaDTO>> GetRecetasByPacienteId(int pacienteId);
+        Task<bool> UpdateEstadoReceta(int id, string nuevoEstado);
     }
 }

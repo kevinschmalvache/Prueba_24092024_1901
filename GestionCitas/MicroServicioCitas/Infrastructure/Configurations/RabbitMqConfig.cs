@@ -2,9 +2,16 @@
 {
     public class RabbitMqConfig
     {
-        public string HostName { get; set; } = "localhost";
-        public int Port { get; set; } = 5672;
-        public string UserName { get; set; } = "guest";
-        public string Password { get; set; } = "guest";
+        public string HostName { get; set; }
+        public int Port { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+
+        public RabbitMqConfig()
+        {
+            HostName = "localhost";
+            UserName = "guest"; // Usuario por defecto
+            Password = "guest"; // Contraseña por defecto
+        }
     }
 }

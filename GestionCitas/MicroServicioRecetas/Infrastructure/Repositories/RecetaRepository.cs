@@ -1,8 +1,11 @@
 ﻿using MicroServicioRecetas.Domain.Interfaces;
 using MicroServicioRecetas.Domain.Models;
+using MicroServicioRecetas.Exceptions;
 using MicroServicioRecetas.Infraestructure.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MicroServicioRecetas.Infrastructure.Repositories
@@ -58,12 +61,33 @@ namespace MicroServicioRecetas.Infrastructure.Repositories
             return objOriginalReceta;
         }
 
-
         public async Task DeleteRecetaAsync(int id)
         {
             Receta receta = await _context.Recetas.FindAsync(id);
             _context.Recetas.Remove(receta);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Receta>> GetRecetasByPacienteId(int pacienteId)
+        {
+            return await _context.Recetas.Where(r => r.PacienteId == pacienteId)
+                                         .ToListAsync();
+        }
+
+        public async Task<bool> UpdateEstadoRecetaAsync(int id, string nuevoEstado)
+        {
+            Receta receta = await _context.Recetas.FindAsync(id);
+
+            if (receta == null)
+                throw new NotFoundException("La receta con el ID especificado no existe.");
+
+            if (receta.Estado.ToLower().Equals("vencida") || receta.Estado.ToLower().Equals("entregada"))
+                throw new InvalidOperationException("No se puede editar una receta en estado 'Vencida' o 'Entregada'.");
+
+            receta.Estado = nuevoEstado;
+
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

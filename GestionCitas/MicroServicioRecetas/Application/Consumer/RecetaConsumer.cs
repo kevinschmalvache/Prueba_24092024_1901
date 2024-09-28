@@ -1,4 +1,5 @@
-﻿using MicroServicioRecetas.Domain.Interfaces;
+﻿using MicroServicioRecetas.Application.DTOs;
+using MicroServicioRecetas.Domain.Interfaces;
 using MicroServicioRecetas.Domain.Models;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -27,7 +28,7 @@ namespace MicroServicioRecetas.Application.Consumers
 
         public void StartConsuming()
         {
-            var consumer = new EventingBasicConsumer(_channel);
+            EventingBasicConsumer consumer = new EventingBasicConsumer(_channel);
             consumer.Received += async (model, ea) =>
             {
                 var body = ea.Body.ToArray();
@@ -68,12 +69,5 @@ namespace MicroServicioRecetas.Application.Consumers
             // Agregar la receta a la base de datos
             await _recetaRepository.AddRecetaAsync(receta);
         }
-    }
-
-    public class RecetaRequest
-    {
-        public int CitaId { get; set; }
-        public int PacienteId { get; set; }
-        public int MedicoId { get; set; }
     }
 }

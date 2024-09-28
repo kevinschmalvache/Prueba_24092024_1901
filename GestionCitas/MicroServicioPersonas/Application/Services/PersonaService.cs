@@ -60,20 +60,18 @@ namespace MicroServicioPersonas.Aplication.Services
         public async Task<PersonaDTO> Update(int id, UpdatePersonaDTO updatePersonaDto)
         {
             // Obtener la persona existente
-            Persona existPersona = await _personaRepository.GetById(id);
+            //Persona existPersona = await _personaRepository.GetById(id);
 
             // Validar que la persona exista
-            _personaDomainService.ExistPersona(existPersona);
+            //_personaDomainService.ExistPersona(existPersona);
 
             // Mapear solo las propiedades actualizables (Nombre y Apellido) a la entidad existente
             //_mapper.Map(updatePersonaDto, existPersona);
             Persona persona = _mapper.Map<Persona>(updatePersonaDto);
 
             // Actualizar la entidad en la base de datos
-            existPersona = await _personaRepository.Update(id, persona);
-
             // Mapear la entidad actualizada a PersonaDTO
-            PersonaDTO updatedPersonaDto = _mapper.Map<PersonaDTO>(existPersona);
+            PersonaDTO updatedPersonaDto = _mapper.Map<PersonaDTO>(await _personaRepository.Update(id, persona));
 
             // Retornar el DTO de la persona actualizada
             return updatedPersonaDto;

@@ -21,6 +21,11 @@ namespace MicroServicioRecetas.Domain.Services
                 throw new ArgumentException("La fecha de creación de la receta es inválida.");
             }
 
+            ValidarEstadosReceta(receta);
+        }
+
+        public void ValidarEstadosReceta(Receta receta) 
+        {
             // Validar si el estado de la receta es un valor válido en el Enum EstadoReceta
             if (!Enum.GetNames(typeof(EstadoReceta)).Contains(receta.Estado))
             {

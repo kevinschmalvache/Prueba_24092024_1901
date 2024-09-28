@@ -140,6 +140,7 @@
     <Compile Include="Application\DTOs\BaseRecetaDTO.cs" />
     <Compile Include="Application\DTOs\CreateRecetaDTO.cs" />
     <Compile Include="Application\DTOs\RecetaDTO.cs" />
+    <Compile Include="Application\DTOs\RecetaRequest.cs" />
     <Compile Include="Application\DTOs\UpdateRecetaDTO.cs" />
     <Compile Include="Application\Interfaces\IRecetaService.cs" />
     <Compile Include="Application\Mapping\AutoMapperProfiles\RecetaProfile.cs" />

@@ -1,7 +1,9 @@
 ﻿using MicroServicioPersonas.Application.DTOs;
 using MicroServicioRecetas.Application.DTOs;
 using MicroServicioRecetas.Application.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -58,6 +60,42 @@ namespace MicroServicioRecetas.Presentation.Controllers
         {
             await _recetaService.DeleteReceta(id);
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("paciente/{pacienteId:int}")]
+        public async Task<IHttpActionResult> GetRecetasByPacienteId(int pacienteId)
+        {
+            var recetas = await _recetaService.GetRecetasByPacienteId(pacienteId);
+
+            if (recetas == null || recetas.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(recetas);
+        }
+
+        [HttpPut]
+        [Route("estado/{id:int}")]
+        public async Task<IHttpActionResult> UpdateEstado(int id, [FromBody] string nuevoEstado)
+        {
+            try
+            {
+                bool result = await _recetaService.UpdateEstadoReceta(id, nuevoEstado);
+                if (result)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

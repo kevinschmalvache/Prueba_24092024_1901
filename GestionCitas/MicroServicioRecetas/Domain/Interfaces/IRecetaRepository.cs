@@ -11,5 +11,7 @@ namespace MicroServicioRecetas.Domain.Interfaces
         Task<Receta> AddRecetaAsync(Receta receta);
         Task<Receta> UpdateRecetaAsync(int id, Receta receta);
         Task DeleteRecetaAsync(int id);
+        Task<List<Receta>> GetRecetasByPacienteId(int pacienteId);
+        Task<bool> UpdateEstadoRecetaAsync(int id, string nuevoEstado);
     }
 }
