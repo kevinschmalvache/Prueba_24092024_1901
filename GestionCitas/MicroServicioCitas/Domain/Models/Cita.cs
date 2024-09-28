@@ -21,5 +21,10 @@ namespace MicroServicioCitas.Domain.Models
 
         [Required(ErrorMessage = "El Estado es requerido.")]
         public string Estado { get; set; } // "Pendiente", "En proceso", "Finalizada"
+
+        public Cita()
+        {
+            Estado = "Pendiente";
+        }
     }
 }

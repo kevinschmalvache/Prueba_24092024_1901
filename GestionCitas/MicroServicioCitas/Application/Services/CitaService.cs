@@ -45,7 +45,7 @@ namespace MicroServicioCitas.Application.Services
         {
             Cita cita = _mapper.Map<Cita>(createCitaDto);
             _citaDomainService.ValidateCita(cita);
-            cita.Estado = "Pendiente";
+            //cita.Estado = "Pendiente";
             cita = await _citaRepository.Add(cita);
             return _mapper.Map<CitaDTO>(cita); 
         }
@@ -90,30 +90,5 @@ namespace MicroServicioCitas.Application.Services
             _citaDomainService.ExistCita(existCita);
             await _citaRepository.Delete(id);
         }
-
-        //public async Task FinalizarCita(int id)
-        //{
-        //    // Obtener el DTO de la cita
-        //    CitaDTO citaDto = await GetById(id);
-
-        //    // Validar que el estado de la cita sea "Pendiente" o "En proceso"
-        //    if (citaDto.Estado != "Pendiente" && citaDto.Estado != "Enproceso")
-        //        throw new Exception("Solo se pueden finalizar citas que estén en estado 'Pendiente' o 'En proceso'.");
-
-        //    // Mapear el CitaDTO a la entidad Cita para realizar la actualización
-        //    var cita = _mapper.Map<Cita>(citaDto);
-
-        //    // Cambiar el estado a "Finalizada"
-        //    cita.Estado = "Finalizada";
-
-        //    // Actualizar la cita en el repositorio
-        //    await _citaRepository.Update(cita);
-
-        //    // Enviar el mensaje a RabbitMQ para procesar la creación de una receta
-        //    await _rabbitMqService.SendRecetaRequest(cita);
-
-        //    // Retornar el DTO actualizado ? 
-        //    //return _mapper.Map<CitaDTO>(cita); // Mapeo de Cita a CitaDTO para retornar
-        //}
     }
 }

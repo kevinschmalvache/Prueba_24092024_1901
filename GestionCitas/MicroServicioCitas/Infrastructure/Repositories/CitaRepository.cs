@@ -34,6 +34,9 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             if (objCitaOriginal == null)
                 throw new NotFoundException("La cita no existe.");
 
+            if (objCitaOriginal.Estado.ToLower().Equals("finalizada"))
+                throw new NotFoundException("No se puede editar una cita en estado finalizada.");
+
             // Itera sobre las propiedades de la entidad actualizada
             var propertiesToUpdate = new List<string> { "Lugar", "Fecha" };
             foreach (var property in propertiesToUpdate)
@@ -56,19 +59,17 @@ namespace MicroServicioCitas.Infraestructure.Repositories
 
         public async Task<Cita> UpdateEstado(int id, string nuevoEstado)
         {
-            Cita existingCita = await _context.Citas.FindAsync(id);
-            if (existingCita == null)
-                throw new NotFoundException("La cita no existe.");
+            Cita objCita = await _context.Citas.FindAsync(id);
 
             // Actualiza el estado de la cita
-            existingCita.Estado = nuevoEstado;
+            objCita.Estado = nuevoEstado;
 
             // Marca la entidad como modificada
-            _context.Entry(existingCita).State = System.Data.Entity.EntityState.Modified;
+            _context.Entry(objCita).State = System.Data.Entity.EntityState.Modified;
 
             await _context.SaveChangesAsync();
             // Retorna la cita actualizada
-            return existingCita;
+            return objCita;
         }
 
         public async Task Delete(int id)
