@@ -26,7 +26,7 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             return cita;
         }
 
-        public async Task<Cita> Update(int id ,Cita objCitaUpdate)
+        public async Task<Cita> Update(int id, Cita objCitaUpdate)
         {
             // Encuentra la cita existente en la base de datos
             Cita objCitaOriginal = await _context.Citas.FindAsync(id);

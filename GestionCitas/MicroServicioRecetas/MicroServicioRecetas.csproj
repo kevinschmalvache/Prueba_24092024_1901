@@ -149,6 +149,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Domain\Enums\EstadoReceta.cs" />
+    <Compile Include="Domain\Enums\MessageType.cs" />
     <Compile Include="Domain\Exceptions\Exceptions.cs" />
     <Compile Include="Domain\Interfaces\IRecetaRepository.cs" />
     <Compile Include="Domain\Models\Receta.cs" />

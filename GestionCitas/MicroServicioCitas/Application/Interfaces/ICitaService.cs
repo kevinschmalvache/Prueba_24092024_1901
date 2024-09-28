@@ -1,5 +1,4 @@
 ﻿using MicroServicioCitas.Application.DTOs;
-using MicroServicioCitas.Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

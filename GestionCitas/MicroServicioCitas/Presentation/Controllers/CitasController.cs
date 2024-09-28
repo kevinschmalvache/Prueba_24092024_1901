@@ -1,8 +1,6 @@
 ﻿using MicroServicioCitas.Application.DTOs;
 using MicroServicioCitas.Application.Interfaces;
-using MicroServicioCitas.Application.Services;
-using MicroServicioCitas.Domain.Models;
-using System;
+using MicroServicioCitas.Application.Sender;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;

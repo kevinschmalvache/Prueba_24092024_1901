@@ -1,6 +1,7 @@
 using AutoMapper;
 using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Application.Mapping.AutoMapperProfiles;
+using MicroServicioCitas.Application.Sender;
 using MicroServicioCitas.Application.Services;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Infraestructure.Data;

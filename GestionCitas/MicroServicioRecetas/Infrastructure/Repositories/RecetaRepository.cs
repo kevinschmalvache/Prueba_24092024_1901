@@ -40,6 +40,11 @@ namespace MicroServicioRecetas.Infrastructure.Repositories
         {
             Receta objOriginalReceta = await _context.Recetas.FindAsync(id);
 
+            if (objOriginalReceta == null)
+            {
+                throw new NotFoundException("La receta con el ID especificado no existe.");
+            }
+
             // Lista de propiedades a actualizar
             var propertiesToUpdate = new List<string> { "Descripcion", "Estado" };
 
@@ -64,6 +69,10 @@ namespace MicroServicioRecetas.Infrastructure.Repositories
         public async Task DeleteRecetaAsync(int id)
         {
             Receta receta = await _context.Recetas.FindAsync(id);
+
+            if (receta == null)
+                throw new NotFoundException("La receta con el ID especificado no existe.");
+
             _context.Recetas.Remove(receta);
             await _context.SaveChangesAsync();
         }

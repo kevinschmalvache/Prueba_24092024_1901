@@ -52,8 +52,6 @@ namespace MicroServicioRecetas.Application.Services
 
         public async Task<RecetaDTO> UpdateReceta(int id, UpdateRecetaDTO recetaDto)
         {
-            _recetaDomainService.ExistReceta(await _recetaRepository.GetRecetaByIdAsync(id));
-
             Receta receta = _mapper.Map<Receta>(recetaDto);
             Receta updatedReceta = await _recetaRepository.UpdateRecetaAsync(id, receta);
 
@@ -62,9 +60,6 @@ namespace MicroServicioRecetas.Application.Services
 
         public async Task DeleteReceta(int id)
         {
-            Receta existReceta = await _recetaRepository.GetRecetaByIdAsync(id);
-            _recetaDomainService.ExistReceta(existReceta);
-
             await _recetaRepository.DeleteRecetaAsync(id);
         }
 

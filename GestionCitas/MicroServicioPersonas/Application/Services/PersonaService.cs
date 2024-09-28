@@ -84,7 +84,7 @@ namespace MicroServicioPersonas.Aplication.Services
             Persona existPersona = await _personaRepository.GetById(id);
             _personaDomainService.ExistPersona(existPersona);
 
-            _personaRepository.Delete(id);
+            await _personaRepository.Delete(id);
         }
     }
 }

@@ -10,8 +10,11 @@ namespace MicroServicioCitas.Domain.Services
     public class CitaDomainService
     {
 
-        public void ValidateEstado(Cita cita, string nuevoEstado) 
+        public void ValidateEstado(Cita cita, string nuevoEstado)
         {
+            if (string.IsNullOrWhiteSpace(nuevoEstado))
+                throw new ArgumentException("El estado de la cita no es válido.");
+
             // Validar si el tipo persona esta en el enum
             if (!Enum.GetNames(typeof(EstadoCita)).Contains(cita.Estado.ToLower()))
             {

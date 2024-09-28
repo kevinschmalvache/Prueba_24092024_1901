@@ -20,6 +20,17 @@ namespace MicroServicioCitas.Application.Services
 
             // Declara el intercambio si es necesario
             _channel.ExchangeDeclare(exchange: "recetaExchange", type: "direct");
+
+            // Vincula (bind) la cola 'recetasQueue' con el exchange 'recetaExchange'
+            //_channel.QueueDelete("recetasQueue");
+            _channel.QueueDeclare(
+                queue: "recetasQueue",
+                durable: false,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null
+            );
+            _channel.QueueBind(queue: "recetasQueue", exchange: "recetaExchange", routingKey: "recetaRoutingKey");
         }
 
         public async Task SendRecetaRequest(object recetaData)

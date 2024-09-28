@@ -10,6 +10,7 @@
         public RabbitMqConfig()
         {
             HostName = "localhost";
+            Port = 5672;
             UserName = "guest"; // Usuario por defecto
             Password = "guest"; // Contraseña por defecto
         }

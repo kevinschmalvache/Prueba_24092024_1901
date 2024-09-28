@@ -143,7 +143,7 @@
     <Compile Include="Application\Interfaces\IRabbitMqService.cs" />
     <Compile Include="Application\Mapping\AutoMapperProfiles\CitaProfile.cs" />
     <Compile Include="Application\Services\CitaService.cs" />
-    <Compile Include="Application\Services\RabbitMqSender.cs" />
+    <Compile Include="Application\Sender\RabbitMqSender.cs" />
     <Compile Include="Application\Services\RabbitMqService.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />

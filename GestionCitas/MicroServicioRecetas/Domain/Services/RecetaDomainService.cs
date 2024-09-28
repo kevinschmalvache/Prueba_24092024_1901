@@ -24,7 +24,7 @@ namespace MicroServicioRecetas.Domain.Services
             ValidarEstadosReceta(receta);
         }
 
-        public void ValidarEstadosReceta(Receta receta) 
+        public void ValidarEstadosReceta(Receta receta)
         {
             // Validar si el estado de la receta es un valor válido en el Enum EstadoReceta
             if (!Enum.GetNames(typeof(EstadoReceta)).Contains(receta.Estado))

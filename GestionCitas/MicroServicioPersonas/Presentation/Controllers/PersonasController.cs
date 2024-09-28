@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MicroServicioPersonas.Aplication.Interfaces;
 using MicroServicioPersonas.Application.DTOs;
-using MicroServicioPersonas.Domain.Models;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;

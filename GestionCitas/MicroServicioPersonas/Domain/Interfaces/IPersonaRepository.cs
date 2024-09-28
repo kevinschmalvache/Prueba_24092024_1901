@@ -9,7 +9,7 @@ namespace MicroServicioPersonas.Domain.Interfaces
         Task<List<Persona>> GetAll();
         Task<Persona> GetById(int id);
         Task<Persona> Add(Persona persona);
-        Task<Persona> Update(int id,Persona persona);
+        Task<Persona> Update(int id, Persona persona);
         Task Delete(int id);
     }
 

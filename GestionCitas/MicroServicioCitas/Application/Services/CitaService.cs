@@ -4,7 +4,6 @@ using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Domain.Services;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,9 +16,9 @@ namespace MicroServicioCitas.Application.Services
         private readonly CitaDomainService _citaDomainService;
         private readonly IRabbitMqService _rabbitMqService; // Servicio para RabbitMQ
 
-        public CitaService( IMapper mapper, 
-                            ICitaRepository citaRepository, 
-                            CitaDomainService citaDomainService, 
+        public CitaService(IMapper mapper,
+                            ICitaRepository citaRepository,
+                            CitaDomainService citaDomainService,
                             IRabbitMqService rabbitMqService)
         {
             _mapper = mapper;
@@ -47,7 +46,7 @@ namespace MicroServicioCitas.Application.Services
             _citaDomainService.ValidateCita(cita);
             //cita.Estado = "Pendiente";
             cita = await _citaRepository.Add(cita);
-            return _mapper.Map<CitaDTO>(cita); 
+            return _mapper.Map<CitaDTO>(cita);
         }
 
         public async Task<CitaDTO> Update(int id, UpdateCitaDTO updateCitaDto)
