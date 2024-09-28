@@ -1,12 +1,11 @@
 using AutoMapper;
-using MicroServicioRecetas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioRecetas.Application.Consumers; // Asegúrate de importar el namespace correcto
+using MicroServicioRecetas.Application.Mapping.AutoMapperProfiles;
+using MicroServicioRecetas.Infraestructure.Data;
+using MicroServicioRecetas.Infrastructure.Repositories;
 using MicroServicioRecetas.Presentation.Filters;
 using RabbitMQ.Client;
 using System.Web.Http;
-using MicroServicioRecetas.Infrastructure.Repositories;
-using MicroServicioRecetas.Infraestructure.Data;
-using System.Data.Common;
 
 namespace MicroServicioRecetas
 {

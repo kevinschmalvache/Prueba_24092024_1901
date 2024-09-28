@@ -1,12 +1,11 @@
-﻿using MicroServicioRecetas.Application.Interfaces;
+﻿using MicroServicioRecetas.Domain.Interfaces;
 using MicroServicioRecetas.Domain.Models;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Newtonsoft.Json;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using MicroServicioRecetas.Domain.Interfaces;
 
 namespace MicroServicioRecetas.Application.Consumers
 {
