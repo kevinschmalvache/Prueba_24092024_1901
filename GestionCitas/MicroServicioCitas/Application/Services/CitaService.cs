@@ -4,6 +4,7 @@ using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Domain.Services;
+using RestSharp;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -43,8 +44,7 @@ namespace MicroServicioCitas.Application.Services
         public async Task<CitaDTO> Create(CreateCitaDTO createCitaDto)
         {
             Cita cita = _mapper.Map<Cita>(createCitaDto);
-            _citaDomainService.ValidateCita(cita);
-            //cita.Estado = "Pendiente";
+            await _citaDomainService.ValidateCita(cita);
             cita = await _citaRepository.Add(cita);
             return _mapper.Map<CitaDTO>(cita);
         }

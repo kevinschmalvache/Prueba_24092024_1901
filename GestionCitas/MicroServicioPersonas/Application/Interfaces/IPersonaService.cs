@@ -11,5 +11,7 @@ namespace MicroServicioPersonas.Aplication.Interfaces
         Task<PersonaDTO> Create(CreatePersonaDTO persona);
         Task<PersonaDTO> Update(int id, UpdatePersonaDTO persona);
         Task Delete(int id);
+
+        Task<bool> ValidatePersonaAsync(int id, string tipoPersona);
     }
 }

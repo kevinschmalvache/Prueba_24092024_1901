@@ -2,8 +2,10 @@
 using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Exceptions;
 using MicroServicioPersonas.Infraestructure.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MicroServicioPersonas.Infraestructure.Repositories
@@ -78,6 +80,14 @@ namespace MicroServicioPersonas.Infraestructure.Repositories
             Persona persona = await GetById(id);
             _context.Personas.Remove(persona);
             _context.SaveChanges();
+        }
+
+        public async Task<bool> ValidatePersonaAsync(int id, string tipoPersona)
+        {
+            // Usamos Where para filtrar por id y tipoPersona
+            return await _context.Personas
+                .Where(p => p.Id == id && p.TipoDePersona.Equals(tipoPersona, StringComparison.OrdinalIgnoreCase))
+                .AnyAsync(); // Verificamos si existe al menos una coincidencia
         }
     }
 }

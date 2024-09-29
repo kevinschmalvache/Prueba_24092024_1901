@@ -7,8 +7,10 @@ using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Infraestructure.Data;
 using MicroServicioCitas.Infraestructure.Repositories;
 using MicroServicioCitas.Infrastructure.Configurations;
+using RestSharp;
 using System.Web.Http;
 using Unity;
+using Unity.Injection;
 using Unity.Lifetime;
 using Unity.WebApi;
 
@@ -34,6 +36,13 @@ namespace MicroServicioCitas
             container.RegisterType<RabbitMqSender>(new SingletonLifetimeManager());
             container.RegisterType<IRabbitMqService, RabbitMqService>(new SingletonLifetimeManager());
 
+            // Registrar IPersonaApi y su implementación
+            container.RegisterType<IPersonaApi>(new InjectionFactory(c =>new PersonaApiService("https://localhost:44399/"))); // Cambia esto por tu URL base api personas
+
+
+            // Registrar RestClient
+            container.RegisterType<IRestClient, RestClient>(new SingletonLifetimeManager());
+            container.RegisterType<RestClient>(new ContainerControlledLifetimeManager());
 
             // Configuración de AutoMapper
             var config = new MapperConfiguration(cfg =>

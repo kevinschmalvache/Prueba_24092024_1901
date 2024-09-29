@@ -1,14 +1,23 @@
-﻿using MicroServicioCitas.Domain.Enums;
+﻿using MicroServicioCitas.Application.Interfaces;
+using MicroServicioCitas.Domain.Enums;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Exceptions;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MicroServicioCitas.Domain.Services
 {
     // Lógica de negocio y validaciones, manteniendo la integridad de las entidades del dominio.
     public class CitaDomainService
     {
+
+        private readonly IPersonaApi _personaApi; // Inyección de la interfaz de persona API
+
+        public CitaDomainService(IPersonaApi personaApi)
+        {
+            _personaApi = personaApi;
+        }
 
         public void ValidateEstado(Cita cita, string nuevoEstado)
         {
@@ -27,7 +36,7 @@ namespace MicroServicioCitas.Domain.Services
 
         }
 
-        public void ValidateCita(Cita cita)
+        public async Task ValidateCita(Cita cita)
         {
             if (cita == null)
                 throw new ArgumentNullException(nameof(cita), "La cita no puede ser nula.");
@@ -37,6 +46,14 @@ namespace MicroServicioCitas.Domain.Services
 
             if (string.IsNullOrWhiteSpace(cita.Lugar))
                 throw new ArgumentException("El lugar de la cita es obligatorio.");
+
+            // Validar que el paciente existe
+            if (!await _personaApi.ValidatePaciente(cita.PacienteId))
+                throw new ArgumentException("El paciente especificado no existe.");
+
+            // Validar que el médico existe
+            if (!await _personaApi.ValidateMedico(cita.MedicoId))
+                throw new ArgumentException("El médico especificado no existe.");
 
             //if (string.IsNullOrWhiteSpace(cita.Estado))
             //    throw new ArgumentException("El estado de la cita es obligatorio.");

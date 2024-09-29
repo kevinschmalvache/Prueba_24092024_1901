@@ -62,5 +62,16 @@ namespace MicroServicioPersonas.Presentation.Controllers
             await _personaService.Delete(id);
             return StatusCode(HttpStatusCode.NoContent);
         }
+
+        [HttpGet]
+        [Route("validate/{id:int}/{tipoPersona}")]
+        public async Task<IHttpActionResult> ValidatePersona(int id, string tipoPersona)
+        {
+            bool isValid = await _personaService.ValidatePersonaAsync(id, tipoPersona);
+            if (isValid)
+                return Ok(true);
+
+            return NotFound();
+        }
     }
 }

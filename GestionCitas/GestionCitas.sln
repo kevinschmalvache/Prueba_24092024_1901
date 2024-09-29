@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicioCitas", "Micro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicioRecetas", "MicroServicioRecetas\MicroServicioRecetas.csproj", "{9C42A37A-1A38-4FD4-91C3-E834AC696168}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicioAuth", "MicroServicioAuth\MicroServicioAuth.csproj", "{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{9C42A37A-1A38-4FD4-91C3-E834AC696168}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C42A37A-1A38-4FD4-91C3-E834AC696168}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C42A37A-1A38-4FD4-91C3-E834AC696168}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -37,6 +43,7 @@ Global
 		{A4F0F6C5-2E64-4073-9DC7-CAFB8AAF7869} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
 		{E7263B8F-BAFF-4FC3-A05D-BBD0CAFB9A2D} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
 		{9C42A37A-1A38-4FD4-91C3-E834AC696168} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
+		{7B55F2FF-1C26-4024-AE14-4AA91E2B54C3} = {D477A97F-724B-45A9-8F6F-C2A45D226307}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B7195819-49F0-44E1-9F62-CCAC8E17225E}

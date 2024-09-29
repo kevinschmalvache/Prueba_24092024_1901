@@ -4,6 +4,7 @@ using MicroServicioPersonas.Application.DTOs;
 using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioPersonas.Domain.Models;
 using MicroServicioPersonas.Domain.Services;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -85,6 +86,12 @@ namespace MicroServicioPersonas.Aplication.Services
             _personaDomainService.ExistPersona(existPersona);
 
             await _personaRepository.Delete(id);
+        }
+
+        // Método para validar si una persona existe y su tipo coincide
+        public async Task<bool> ValidatePersonaAsync(int id, string tipoPersona)
+        {
+            return await _personaRepository.ValidatePersonaAsync(id, tipoPersona);
         }
     }
 }

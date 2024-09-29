@@ -11,6 +11,7 @@ namespace MicroServicioPersonas.Domain.Interfaces
         Task<Persona> Add(Persona persona);
         Task<Persona> Update(int id, Persona persona);
         Task Delete(int id);
+        Task<bool> ValidatePersonaAsync(int id, string tipoPersona);
     }
 
 }
