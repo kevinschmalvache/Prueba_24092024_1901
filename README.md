@@ -31,7 +31,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
    - Actúa como receptor para RabbitMQ, recibiendo información sobre recetas del microservicio de Citas.
    - Ofrece una API Web para consultar recetas por código único o por paciente, así como para actualizar su estado.
 
-### Tecnologias principales
+### ¿Que Estamos Usando?
 - **Swagger**
 - **RabbitMQ**
 - **SQL Server**: Sistema de gestión de bases de datos relacional.
@@ -48,7 +48,6 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 
 
 ### ¿Como hacer la puesta en marcha?
-
     - Abre la solución.
     - Compila la solución para instalar todos los paquetes (nuguets).
     - Verifica que cada proyecto de microservicio esté configurado para iniciar adecuadamente.
@@ -58,7 +57,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 
 #### MicroServicioPersonas - https://localhost:44399
 
-| Tipo HTTP | URL                          | Descripción                                            |
+| HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
 | GET    | `/api/personas`               | Obtener todas las personas registradas                 |
 | GET    | `/api/personas/{id}`          | Obtener una persona específica por su ID               |
@@ -70,7 +69,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 
 #### MicroServicioCitas - https://localhost:44389
 
-| Tipo HTTP | URL                          | Descripción                                            |
+| HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
 | GET    | `/api/citas`                  | Obtener todas las citas                                 |
 | GET    | `/api/citas/{id}`             | Obtener una cita específica por su ID                  |
@@ -82,7 +81,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 
 #### MicroServicioRecetas - https://localhost:44379
 
-| Tipo HTTP | URL                          | Descripción                                              |
+| HTTP | URL                          | Descripción                                              |
 |--------|-------------------------------|----------------------------------------------------------|
 | GET    | `/api/recetas`                | Obtener todas las recetas                                |
 | GET    | `/api/recetas/{id}`           | Obtener receta por ID                                    |
