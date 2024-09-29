@@ -21,6 +21,7 @@ namespace MicroServicioRecetas.Infrastructure.Repositories
 
         public async Task<List<Receta>> GetRecetasAsync()
         {
+
             return await _context.Recetas.ToListAsync();
         }
 
@@ -90,7 +91,7 @@ namespace MicroServicioRecetas.Infrastructure.Repositories
             if (receta == null)
                 throw new NotFoundException("La receta con el ID especificado no existe.");
 
-            if (receta.Estado.ToLower().Equals("vencida") || receta.Estado.ToLower().Equals("entregada"))
+            if (receta.Estado.Equals("vencida", StringComparison.OrdinalIgnoreCase) || receta.Estado.Equals("entregada", StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException("No se puede editar una receta en estado 'Vencida' o 'Entregada'.");
 
             receta.Estado = nuevoEstado;

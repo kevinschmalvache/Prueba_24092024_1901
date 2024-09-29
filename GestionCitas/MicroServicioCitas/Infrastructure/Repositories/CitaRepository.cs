@@ -2,6 +2,7 @@
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Exceptions;
 using MicroServicioCitas.Infraestructure.Data;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             if (objCitaOriginal == null)
                 throw new NotFoundException("La cita no existe.");
 
-            if (objCitaOriginal.Estado.ToLower().Equals("finalizada"))
+            if (objCitaOriginal.Estado.Equals("finalizada", StringComparison.OrdinalIgnoreCase))
                 throw new NotFoundException("No se puede editar una cita en estado finalizada.");
 
             // Itera sobre las propiedades de la entidad actualizada

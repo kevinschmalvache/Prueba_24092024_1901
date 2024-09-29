@@ -5,6 +5,7 @@ using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Domain.Services;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -68,7 +69,7 @@ namespace MicroServicioCitas.Application.Services
             Cita objResult = await _citaRepository.UpdateEstado(id, nuevoEstado);
 
             // Si el estado es "Finalizada", enviar un mensaje a RabbitMQ
-            if (objResult.Estado.ToLower().Equals("finalizada"))
+            if (objResult.Estado.Equals("finalizada", StringComparison.OrdinalIgnoreCase))
             {
                 var recetaData = new
                 {

@@ -27,7 +27,7 @@ namespace MicroServicioPersonas.Domain.Services
             }
 
             // Validar si el tipo persona esta en el enum
-            if (!Enum.GetNames(typeof(TipoDePersona)).Contains(persona.TipoDePersona.ToLower()))
+            if (!Enum.GetNames(typeof(TipoDePersona)).Contains(persona.TipoDePersona, StringComparer.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("El tipo de persona no es válido.");
             }
