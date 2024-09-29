@@ -55,7 +55,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
     - Para ver detalladamente la lista de los EndPoints puedes escribir en tu navegador https://localhost:{puertoDelServicio}/swagger .
 
 
-#### MicroServicioPersonas (https://localhost:44399)
+#### MicroServicioPersonas (https://localhost:44399/swagger)
 
 | HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
@@ -67,7 +67,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 | GET    | `/api/personas/validate/{id:int}/{tipoPersona}` | Validar si una persona es válida según su ID y tipo de persona |
 
 
-#### MicroServicioCitas (https://localhost:44389)
+#### MicroServicioCitas (https://localhost:44389/swagger)
 
 | HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
@@ -79,7 +79,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 | PUT    | `/api/citas/{id}/estado`      | Actualizar el estado de una cita existente              |
 
 
-#### MicroServicioRecetas (https://localhost:44379)
+#### MicroServicioRecetas (https://localhost:44379/swagger)
 
 | HTTP | URL                          | Descripción                                              |
 |--------|-------------------------------|----------------------------------------------------------|
