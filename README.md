@@ -11,19 +11,19 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 
 ## ¿Como se compone el proyecto?
 
-1. **Microservicio de Personas (MicroServicioPersonas)**: 
+1. **Microservicio de Personas (MicroServicioPersonas.csproj)**: 
    - Administra la información relacionada con médicos y pacientes.
    - Cada individuo es identificado por un atributo "tipo de usuario".
    - Ofrece una API Web para proporcionar datos al microservicio de Citas.
    
-2. **Microservicio de Citas (MicroServicioCitas)**:
+2. **Microservicio de Citas (MicroServicioCitas.csproj)**:
    - Facilita la programación de citas, almacenando información como fecha, lugar, paciente y médico.
    - Realiza el seguimiento del estado de cada cita: "Pendiente", "En proceso" y "Finalizada".
    - Solicita al médico que ingrese la receta al concluir una cita.
    - Proporciona una API Web para la actualización de estados de las citas.
    - Funciona como emisor para RabbitMQ, promoviendo la creación de recetas al finalizar las citas.
    
-3. **Microservicio de Rectas (MicroServicioRecetas)**:
+3. **Microservicio de Rectas (MicroServicioRecetas.csproj)**:
    - Administra y almacena las recetas médicas.
    - Monitorea el estado de cada receta: "Activa", "Vencida" o "Entregada".
    - Cada receta es identificada mediante un código único.
@@ -55,7 +55,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
     - Para ver detalladamente la lista de los EndPoints puedes escribir en tu navegador https://localhost:{puertoDelServicio}/swagger .
 
 
-#### MicroServicioPersonas - https://localhost:44399
+#### MicroServicioPersonas (https://localhost:44399)
 
 | HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
@@ -67,7 +67,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 | GET    | `/api/personas/validate/{id:int}/{tipoPersona}` | Validar si una persona es válida según su ID y tipo de persona |
 
 
-#### MicroServicioCitas - https://localhost:44389
+#### MicroServicioCitas (https://localhost:44389)
 
 | HTTP | URL                          | Descripción                                            |
 |--------|-------------------------------|--------------------------------------------------------|
@@ -79,7 +79,7 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 | PUT    | `/api/citas/{id}/estado`      | Actualizar el estado de una cita existente              |
 
 
-#### MicroServicioRecetas - https://localhost:44379
+#### MicroServicioRecetas (https://localhost:44379)
 
 | HTTP | URL                          | Descripción                                              |
 |--------|-------------------------------|----------------------------------------------------------|
