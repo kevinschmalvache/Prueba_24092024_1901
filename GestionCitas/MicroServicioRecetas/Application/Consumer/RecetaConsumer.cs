@@ -12,11 +12,20 @@ using System.Threading.Tasks;
 
 namespace MicroServicioRecetas.Application.Consumers
 {
+    /// <summary>
+    /// Consumidor encargado de procesar mensajes relacionados con recetas y logs de RabbitMQ.
+    /// </summary>
     public class RecetaConsumer
     {
         private readonly IModel _channel;
         private readonly IRecetaRepository _recetaRepository; // Repositorio para manejar recetas
 
+        /// <summary>
+        /// Constructor que inicializa el consumidor de recetas con el canal de RabbitMQ y el repositorio de recetas.
+        /// Configura las colas y los intercambios (exchanges) para manejar recetas y logs.
+        /// </summary>
+        /// <param name="channel">Canal de comunicación de RabbitMQ.</param>
+        /// <param name="recetaRepository">Repositorio para manejar las operaciones con recetas.</param>
         public RecetaConsumer(IModel channel, IRecetaRepository recetaRepository)
         {
             _channel = channel;
@@ -33,6 +42,10 @@ namespace MicroServicioRecetas.Application.Consumers
             _channel.QueueBind(queue: "logQueue", exchange: "logExchange", routingKey: MessageType.logRoutingKey.ToString());
         }
 
+        /// <summary>
+        /// Inicia la recepción de mensajes desde las colas de RabbitMQ para recetas y logs.
+        /// Los mensajes se procesan según el tipo de mensaje (recetas o logs).
+        /// </summary>
         public void StartConsuming()
         {
             var consumer = new EventingBasicConsumer(_channel);
@@ -77,6 +90,12 @@ namespace MicroServicioRecetas.Application.Consumers
             _channel.BasicConsume(queue: "logQueue", autoAck: true, consumer: consumer);
         }
 
+        /// <summary>
+        /// Procesa la solicitud de receta recibida desde la cola de RabbitMQ.
+        /// Crea una nueva receta basada en los datos recibidos y la almacena en la base de datos.
+        /// </summary>
+        /// <param name="recetaData">Datos de la solicitud de receta.</param>
+        /// <returns>Una tarea asíncrona.</returns>
         private async Task ProcessRecetaRequest(RecetaRequest recetaData)
         {
             if (recetaData == null)
@@ -99,6 +118,12 @@ namespace MicroServicioRecetas.Application.Consumers
             await _recetaRepository.AddRecetaAsync(receta);
         }
 
+        /// <summary>
+        /// Maneja los mensajes de log recibidos desde la cola de RabbitMQ.
+        /// Imprime el mensaje en la consola y lo registra en el depurador.
+        /// </summary>
+        /// <param name="message">Mensaje de log recibido.</param>
+        /// <returns>Una tarea asíncrona.</returns>
         private async Task HandleLogMessage(string message)
         {
             Console.WriteLine(message);
@@ -106,5 +131,4 @@ namespace MicroServicioRecetas.Application.Consumers
             await Task.CompletedTask;
         }
     }
-
 }

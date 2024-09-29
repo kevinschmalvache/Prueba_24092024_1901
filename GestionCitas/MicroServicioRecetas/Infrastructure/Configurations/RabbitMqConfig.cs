@@ -10,7 +10,7 @@
         public RabbitMqConfig()
         {
             // Configuración por defecto
-            HostName = "localhost"; // Cambia esto si tu RabbitMQ está en otro host
+            HostName = "localhost";
             Port = 5672; // Puerto por defecto de RabbitMQ
             UserName = "guest"; // Usuario por defecto
             Password = "guest"; // Contraseña por defecto

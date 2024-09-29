@@ -13,13 +13,33 @@ namespace MicroServicioCitas.Infraestructure.Repositories
     {
         private readonly CitasContext _context;
 
+        /// <summary>
+        /// Constructor que inyecta el contexto de citas.
+        /// </summary>
+        /// <param name="context">Contexto de la base de datos para manejar las citas.</param>
         public CitaRepository(CitasContext context)
         {
             _context = context;
         }
+
+        /// <summary>
+        /// Obtiene todas las citas de la base de datos.
+        /// </summary>
+        /// <returns>Una lista de objetos Cita.</returns>
         public async Task<List<Cita>> GetAll() => await _context.Citas.ToListAsync();
+
+        /// <summary>
+        /// Obtiene una cita por su ID.
+        /// </summary>
+        /// <param name="id">ID de la cita a obtener.</param>
+        /// <returns>La cita correspondiente al ID proporcionado.</returns>
         public async Task<Cita> GetById(int id) => await _context.Citas.FindAsync(id);
 
+        /// <summary>
+        /// Agrega una nueva cita a la base de datos.
+        /// </summary>
+        /// <param name="cita">Objeto Cita que contiene los datos de la cita a agregar.</param>
+        /// <returns>La cita creada.</returns>
         public async Task<Cita> Add(Cita cita)
         {
             _context.Citas.Add(cita);
@@ -27,6 +47,13 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             return cita;
         }
 
+        /// <summary>
+        /// Actualiza una cita existente en la base de datos.
+        /// </summary>
+        /// <param name="id">ID de la cita a actualizar.</param>
+        /// <param name="objCitaUpdate">Objeto Cita que contiene los datos actualizados.</param>
+        /// <returns>La cita actualizada.</returns>
+        /// <exception cref="NotFoundException">Lanzada cuando la cita no existe o está en estado finalizada.</exception>
         public async Task<Cita> Update(int id, Cita objCitaUpdate)
         {
             // Encuentra la cita existente en la base de datos
@@ -58,6 +85,12 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             return objCitaOriginal;
         }
 
+        /// <summary>
+        /// Actualiza el estado de una cita existente.
+        /// </summary>
+        /// <param name="id">ID de la cita a actualizar.</param>
+        /// <param name="nuevoEstado">El nuevo estado de la cita.</param>
+        /// <returns>La cita con el nuevo estado.</returns>
         public async Task<Cita> UpdateEstado(int id, string nuevoEstado)
         {
             Cita objCita = await _context.Citas.FindAsync(id);
@@ -73,6 +106,10 @@ namespace MicroServicioCitas.Infraestructure.Repositories
             return objCita;
         }
 
+        /// <summary>
+        /// Elimina una cita de la base de datos.
+        /// </summary>
+        /// <param name="id">ID de la cita a eliminar.</param>
         public async Task Delete(int id)
         {
             Cita cita = await GetById(id);

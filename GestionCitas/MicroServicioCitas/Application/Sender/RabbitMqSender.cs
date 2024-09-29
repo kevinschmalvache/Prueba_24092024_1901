@@ -6,11 +6,18 @@ using System.Threading.Tasks;
 
 namespace MicroServicioCitas.Application.Sender
 {
+    /// <summary>
+    /// Clase responsable de enviar mensajes a RabbitMQ.
+    /// </summary>
     public class RabbitMqSender : IDisposable
     {
         private readonly IConnection _connection;
         private readonly IModel _channel;
 
+        /// <summary>
+        /// Constructor que inicializa la conexión y el canal de RabbitMQ.
+        /// </summary>
+        /// <param name="config">Configuración de RabbitMQ.</param>
         public RabbitMqSender(RabbitMqConfig config)
         {
             ConnectionFactory factory = new ConnectionFactory()
@@ -27,22 +34,18 @@ namespace MicroServicioCitas.Application.Sender
 
             _channel.ExchangeDeclare(exchange: "logExchange", type: "direct");
 
-            // Declarar la cola de recetas
-            //_channel.QueueDeclare(queue: "recetasQueue", durable: false, exclusive: false, autoDelete: false, arguments: null);
-
             // Declarar la cola de logs
             _channel.QueueDeclare(queue: "logQueue", durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-            // Si usas exchange, también debes declararlo (si aún no está declarado)
-            //_channel.ExchangeDeclare(exchange: "recetaExchange", type: "direct", durable: false);
-            //_channel.ExchangeDeclare(exchange: "logExchange", type: "direct", durable: false);
-
+            // Vincular la cola a un exchange
             _channel.QueueBind(queue: "logQueue", exchange: "logExchange", routingKey: "logRoutingKey");
-
         }
 
-
-        // Método para enviar mensajes a la cola de logs
+        /// <summary>
+        /// Envía un mensaje a la cola de logs de RabbitMQ.
+        /// </summary>
+        /// <param name="logMessage">Mensaje de log a enviar.</param>
+        /// <returns>Retorna verdadero si el mensaje fue enviado exitosamente; de lo contrario, falso.</returns>
         public async Task<bool> SendMessageAsync(string logMessage)
         {
             try
@@ -66,6 +69,9 @@ namespace MicroServicioCitas.Application.Sender
             }
         }
 
+        /// <summary>
+        /// Cierra el canal y la conexión de RabbitMQ de forma asíncrona.
+        /// </summary>
         public async Task CloseAsync()
         {
             await Task.Run(() =>
@@ -75,6 +81,9 @@ namespace MicroServicioCitas.Application.Sender
             });
         }
 
+        /// <summary>
+        /// Libera los recursos utilizados por el objeto RabbitMqSender.
+        /// </summary>
         public void Dispose()
         {
             _channel?.Dispose();

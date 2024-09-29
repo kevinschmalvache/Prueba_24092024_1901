@@ -14,15 +14,22 @@ namespace MicroServicioCitas.Presentation.Controllers
         private readonly ICitaService _citaService;
         private readonly RabbitMqSender _rabbitMqSender;
 
-        // Constructor que inyecta el servicio y RabbitMqSender usando Unity
+        /// <summary>
+        /// Constructor que inyecta el servicio de citas y el RabbitMqSender.
+        /// </summary>
+        /// <param name="citaService">Servicio para manejar las citas.</param>
+        /// <param name="rabbitMqSender">Sender de RabbitMQ para la mensajería.</param>
         public CitasController(ICitaService citaService, RabbitMqSender rabbitMqSender)
         {
             _citaService = citaService;
             _rabbitMqSender = rabbitMqSender;
         }
 
+        /// <summary>
+        /// Obtiene todas las citas.
+        /// </summary>
+        /// <returns>Una lista de citas.</returns>
         [HttpGet]
-        //[Route("")]
         [Route(Name = "GetCitas")]
         public async Task<IHttpActionResult> GetCitas()
         {
@@ -30,6 +37,11 @@ namespace MicroServicioCitas.Presentation.Controllers
             return Ok(citas);
         }
 
+        /// <summary>
+        /// Obtiene una cita por su ID.
+        /// </summary>
+        /// <param name="id">ID de la cita a obtener.</param>
+        /// <returns>La cita correspondiente al ID proporcionado.</returns>
         [HttpGet]
         [Route("{id:int}")]
         public async Task<IHttpActionResult> GetCita(int id)
@@ -38,6 +50,11 @@ namespace MicroServicioCitas.Presentation.Controllers
             return Ok(cita);
         }
 
+        /// <summary>
+        /// Crea una nueva cita.
+        /// </summary>
+        /// <param name="objCita">Objeto DTO que contiene los datos de la cita a crear.</param>
+        /// <returns>La cita creada.</returns>
         [HttpPost]
         [Route("")]
         public async Task<IHttpActionResult> CreateCita([FromBody] CreateCitaDTO objCita)
@@ -52,14 +69,16 @@ namespace MicroServicioCitas.Presentation.Controllers
             return CreatedAtRoute("GetCitas", new { id = createdCita.Id }, createdCita);
         }
 
+        /// <summary>
+        /// Actualiza una cita existente.
+        /// </summary>
+        /// <param name="id">ID de la cita a actualizar.</param>
+        /// <param name="objCita">Objeto DTO que contiene los datos actualizados de la cita.</param>
+        /// <returns>La cita actualizada.</returns>
         [HttpPut]
         [Route("{id:int}")]
         public async Task<IHttpActionResult> UpdateCita(int id, [FromBody] UpdateCitaDTO objCita)
         {
-            //if (!ModelState.IsValid || objCita.Id != id)
-            //if (objCita.Id != id)
-            //    return BadRequest(ModelState);
-
             CitaDTO updatedCita = await _citaService.Update(id, objCita);
 
             // Enviar mensaje a RabbitMQ al actualizar una cita
@@ -68,6 +87,11 @@ namespace MicroServicioCitas.Presentation.Controllers
             return Ok(updatedCita);
         }
 
+        /// <summary>
+        /// Elimina una cita existente.
+        /// </summary>
+        /// <param name="id">ID de la cita a eliminar.</param>
+        /// <returns>Estado de la respuesta HTTP.</returns>
         [HttpDelete]
         [Route("{id:int}")]
         public async Task<IHttpActionResult> DeleteCita(int id)
@@ -76,6 +100,12 @@ namespace MicroServicioCitas.Presentation.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// Actualiza el estado de una cita existente.
+        /// </summary>
+        /// <param name="id">ID de la cita a actualizar.</param>
+        /// <param name="nuevoEstado">Nuevo estado de la cita.</param>
+        /// <returns>La cita con el nuevo estado.</returns>
         [HttpPut]
         [Route("{id:int}/estado")]
         public async Task<IHttpActionResult> UpdateEstado(int id, [FromBody] string nuevoEstado)
@@ -85,9 +115,7 @@ namespace MicroServicioCitas.Presentation.Controllers
             // Enviar mensaje a RabbitMQ al actualizar el estado
             await _rabbitMqSender.SendMessageAsync($"Estado de cita actualizado: ID = {id}, Nuevo Estado = {nuevoEstado}");
 
-            //return StatusCode(HttpStatusCode.NoContent);
             return Ok(citaUpdated);
         }
-
     }
 }
