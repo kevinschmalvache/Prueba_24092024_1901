@@ -4,6 +4,7 @@ using MicroServicioCitas.Application.Interfaces;
 using MicroServicioCitas.Domain.Interfaces;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Domain.Services;
+using MicroServicioPersonas.Domain.Interfaces;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,12 @@ namespace MicroServicioCitas.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly ICitaRepository _citaRepository;
-        private readonly CitaDomainService _citaDomainService;
+        private readonly ICitaDomainService _citaDomainService;
         private readonly IRabbitMqService _rabbitMqService; // Servicio para RabbitMQ
 
         public CitaService(IMapper mapper,
                             ICitaRepository citaRepository,
-                            CitaDomainService citaDomainService,
+                            ICitaDomainService citaDomainService,
                             IRabbitMqService rabbitMqService)
         {
             _mapper = mapper;

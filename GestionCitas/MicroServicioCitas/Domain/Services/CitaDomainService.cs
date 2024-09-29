@@ -2,6 +2,7 @@
 using MicroServicioCitas.Domain.Enums;
 using MicroServicioCitas.Domain.Models;
 using MicroServicioCitas.Exceptions;
+using MicroServicioPersonas.Domain.Interfaces;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace MicroServicioCitas.Domain.Services
 {
     // Lógica de negocio y validaciones, manteniendo la integridad de las entidades del dominio.
-    public class CitaDomainService
+    public class CitaDomainService : ICitaDomainService
     {
 
         private readonly IPersonaApi _personaApi; // Inyección de la interfaz de persona API

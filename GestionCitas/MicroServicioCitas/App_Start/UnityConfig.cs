@@ -4,9 +4,11 @@ using MicroServicioCitas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioCitas.Application.Sender;
 using MicroServicioCitas.Application.Services;
 using MicroServicioCitas.Domain.Interfaces;
+using MicroServicioCitas.Domain.Services;
 using MicroServicioCitas.Infraestructure.Data;
 using MicroServicioCitas.Infraestructure.Repositories;
 using MicroServicioCitas.Infrastructure.Configurations;
+using MicroServicioPersonas.Domain.Interfaces;
 using RestSharp;
 using System.Web.Http;
 using Unity;
@@ -35,6 +37,7 @@ namespace MicroServicioCitas
             container.RegisterType<RabbitMqConfig>(new SingletonLifetimeManager());
             container.RegisterType<RabbitMqSender>(new SingletonLifetimeManager());
             container.RegisterType<IRabbitMqService, RabbitMqService>(new SingletonLifetimeManager());
+            container.RegisterType<ICitaDomainService, CitaDomainService>(new SingletonLifetimeManager());
 
             // Registrar IPersonaApi y su implementación
             container.RegisterType<IPersonaApi>(new InjectionFactory(c =>new PersonaApiService("https://localhost:44399/"))); // Cambia esto por tu URL base api personas
