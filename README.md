@@ -34,11 +34,11 @@ Todos de los microservicios permite realizar operaciones CRUD (Crear, Leer, Actu
 ### ¿Que Estamos Usando?
 - **Swagger**
 - **RabbitMQ**
-- **SQL Server**: Sistema de gestión de bases de datos relacional.
+- **SQL Server**
 - **C# WEB API (.NET Framework 4.8)**
-- **EF (Entity Framework V6)**: Para la interacción con la base de datos y el mapeo objeto-relacional (ORM).
-- **Unity**: Inyección de dependencias.
-- **AutoMapper**: Facilita la conversión entre entidades y DTOs.
+- **EF (Entity Framework V6)**
+- **Unity**
+- **AutoMapper**
 
 
 ### Requisitos Minimos Para Ejecutar
