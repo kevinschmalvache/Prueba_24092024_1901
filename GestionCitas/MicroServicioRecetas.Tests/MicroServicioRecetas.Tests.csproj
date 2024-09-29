@@ -92,6 +92,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application\Services\RecetaServiceTests.cs" />
     <Compile Include="Presentation\Controller\RecetaControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -108,7 +109,6 @@
   <ItemGroup>
     <Folder Include="Application\DTOs\" />
     <Folder Include="Application\Mapping\" />
-    <Folder Include="Application\Services\" />
     <Folder Include="Domain\Models\" />
     <Folder Include="Domain\Services\" />
     <Folder Include="Infrastructure\" />

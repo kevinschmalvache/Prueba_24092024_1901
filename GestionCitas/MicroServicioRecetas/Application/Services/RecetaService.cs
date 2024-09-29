@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MicroServicioPersonas.Application.DTOs;
+using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioRecetas.Application.DTOs;
 using MicroServicioRecetas.Application.Interfaces;
 using MicroServicioRecetas.Domain.Interfaces;
@@ -14,10 +15,10 @@ namespace MicroServicioRecetas.Application.Services
     public class RecetaService : IRecetaService
     {
         private readonly IRecetaRepository _recetaRepository;
-        private readonly RecetaDomainService _recetaDomainService;
+        private readonly IRecetaDomainService _recetaDomainService;
         private readonly IMapper _mapper;
 
-        public RecetaService(IRecetaRepository recetaRepository, RecetaDomainService recetaDomainService, IMapper mapper)
+        public RecetaService(IRecetaRepository recetaRepository, IRecetaDomainService recetaDomainService, IMapper mapper)
         {
             _recetaRepository = recetaRepository;
             _recetaDomainService = recetaDomainService;

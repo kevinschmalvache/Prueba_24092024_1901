@@ -1,8 +1,10 @@
 using AutoMapper;
+using MicroServicioPersonas.Domain.Interfaces;
 using MicroServicioRecetas.Application.Interfaces;
 using MicroServicioRecetas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioRecetas.Application.Services;
 using MicroServicioRecetas.Domain.Interfaces;
+using MicroServicioRecetas.Domain.Services;
 using MicroServicioRecetas.Infrastructure.Repositories;
 using MicroServicioRecetas.Presentation.Controllers;
 using System.Web.Http;
@@ -26,6 +28,7 @@ namespace MicroServicioRecetas
             // Registra las dependencias
             container.RegisterType<IRecetaRepository, RecetaRepository>(new SingletonLifetimeManager());
             container.RegisterType<IRecetaService, RecetaService>(new SingletonLifetimeManager());
+            container.RegisterType<IRecetaDomainService, RecetaDomainService>(new SingletonLifetimeManager());
             // También registrar el controlador
             container.RegisterType<RecetaController>(new TransientLifetimeManager());
 

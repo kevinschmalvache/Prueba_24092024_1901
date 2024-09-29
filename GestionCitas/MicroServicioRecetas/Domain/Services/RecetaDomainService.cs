@@ -1,4 +1,5 @@
-﻿using MicroServicioRecetas.Domain.Enums;
+﻿using MicroServicioPersonas.Domain.Interfaces;
+using MicroServicioRecetas.Domain.Enums;
 using MicroServicioRecetas.Domain.Models;
 using MicroServicioRecetas.Exceptions;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 namespace MicroServicioRecetas.Domain.Services
 {
     // Esta clase gestiona la lógica de negocio y validaciones específicas para las recetas
-    public class RecetaDomainService
+    public class RecetaDomainService : IRecetaDomainService
     {
         public void ValidateReceta(Receta receta)
         {
