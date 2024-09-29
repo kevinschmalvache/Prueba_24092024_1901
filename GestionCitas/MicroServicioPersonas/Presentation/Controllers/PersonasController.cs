@@ -12,13 +12,11 @@ namespace MicroServicioPersonas.Presentation.Controllers
     {
 
         private readonly IPersonaService _personaService;
-        private readonly IMapper _mapper;
 
         // Constructor que inyecta el servicio usando unity
-        public PersonasController(IPersonaService personaService, IMapper mapper)
+        public PersonasController(IPersonaService personaService)
         {
             _personaService = personaService;
-            _mapper = mapper;
         }
 
         [HttpGet]

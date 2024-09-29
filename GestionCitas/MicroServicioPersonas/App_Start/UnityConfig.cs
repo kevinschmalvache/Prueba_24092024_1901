@@ -3,6 +3,7 @@ using MicroServicioPersonas.Aplication.Interfaces;
 using MicroServicioPersonas.Aplication.Services;
 using MicroServicioPersonas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioPersonas.Domain.Interfaces;
+using MicroServicioPersonas.Domain.Services;
 using MicroServicioPersonas.Infraestructure.Data;
 using MicroServicioPersonas.Infraestructure.Repositories;
 using System.Web.Http;
@@ -26,7 +27,8 @@ namespace MicroServicioPersonas
             container.RegisterType<IPersonaRepository, PersonaRepository>(new SingletonLifetimeManager());
             container.RegisterType<IPersonaService, PersonaService>(new SingletonLifetimeManager());
             container.RegisterType<PersonasContext>();
-
+            container.RegisterType<PersonaDomainService>(new SingletonLifetimeManager());
+            
             // Configuración de AutoMapper
             var config = new MapperConfiguration(cfg =>
             {

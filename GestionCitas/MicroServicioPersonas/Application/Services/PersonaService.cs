@@ -47,7 +47,7 @@ namespace MicroServicioPersonas.Aplication.Services
         {
             // Mapeo del DTO a la entidad Persona
             Persona objPersona = _mapper.Map<Persona>(createPersonaDto);
-
+            objPersona.Id = 0;
             // Validaciones de negocio antes de agregar
             _personaDomainService.ValidatePersona(objPersona);
 

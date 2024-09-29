@@ -25,14 +25,18 @@ namespace MicroServicioCitas.Domain.Services
                 throw new ArgumentException("El estado de la cita no es válido.");
 
             // Validar si el tipo persona esta en el enum
-            if (!Enum.GetNames(typeof(EstadoCita)).Contains(cita.Estado.ToLower()))
+            if (!Enum.GetNames(typeof(EstadoCita)).Contains(cita.Estado, StringComparer.OrdinalIgnoreCase))
             {
                 throw new ArgumentException("El estado de la cita no es válido.");
             }
 
             // Validar que el estado de la cita sea "Pendiente" o "En proceso"
-            if (nuevoEstado.ToLower() == "finalizada" && (cita.Estado.ToLower() != "pendiente" && cita.Estado.ToLower() != "enproceso"))
+            if (nuevoEstado.Equals("finalizada", StringComparison.OrdinalIgnoreCase) &&
+                !cita.Estado.Equals("pendiente", StringComparison.OrdinalIgnoreCase) &&
+                !cita.Estado.Equals("enproceso", StringComparison.OrdinalIgnoreCase))
+            {
                 throw new Exception("Solo se pueden finalizar citas que estén en estado 'Pendiente' o 'En proceso'.");
+            }
 
         }
 
