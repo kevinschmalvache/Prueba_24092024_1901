@@ -2,6 +2,7 @@ using AutoMapper;
 using MicroServicioRecetas.Application.Consumers; // Asegúrate de importar el namespace correcto
 using MicroServicioRecetas.Application.Mapping.AutoMapperProfiles;
 using MicroServicioRecetas.Infraestructure.Data;
+using MicroServicioRecetas.Infrastructure.Configurations;
 using MicroServicioRecetas.Infrastructure.Repositories;
 using MicroServicioRecetas.Presentation.Filters;
 using RabbitMQ.Client;
@@ -31,13 +32,20 @@ namespace MicroServicioRecetas
             IMapper mapper = config.CreateMapper();
 
             // Iniciar el consumidor de RabbitMQ
-            StartRabbitMqConsumer();
+            StartRabbitMqConsumer(new RabbitMqConfig());
         }
 
-        private void StartRabbitMqConsumer()
+        private void StartRabbitMqConsumer(RabbitMqConfig config)
         {
             // Crear la conexión a RabbitMQ
-            var factory = new ConnectionFactory() { HostName = "localhost" }; // Asegúrate de que esto concuerde con tu configuración
+            ConnectionFactory factory = new ConnectionFactory()
+            {
+                HostName = config.HostName,
+                Port = config.Port,
+                UserName = config.UserName,
+                Password = config.Password
+            };
+
             var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
 
